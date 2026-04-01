@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Euroleague Teams - SportsTech Intelligence Platform</title>
+    <link rel="stylesheet" href="assets/css/enhanced.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-broadcast">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 1.25rem 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="index.html" class="logo-text" style="text-decoration: none;">
+                    <span class="logo-accent">SPORTS</span>TECH <span style="color: var(--text-muted); font-weight: 400; font-size: 0.9rem;">/ HUB</span>
+                </a>
+                <div style="display: flex; gap: 3rem; align-items: center;">
+                    <a href="index.html" class="nav-link" style="text-decoration: none;">Home</a>
+                    <a href="vendors.html" class="nav-link" style="text-decoration: none;">Vendors</a>
+                    <a href="teams.html" class="nav-link active" style="text-decoration: none;">Teams</a>
+                    <a href="about.html" class="nav-link" style="text-decoration: none;">About</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section style="background: var(--bg-secondary); padding: 4rem 0; border-bottom: 1px solid var(--border-color);">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+            <div style="font-family: 'JetBrains Mono', monospace; color: var(--orange-primary); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.15em; margin-bottom: 1rem; text-transform: uppercase;">
+                // TEAM INTELLIGENCE
+            </div>
+            <h1 style="font-family: 'Barlow Condensed', sans-serif; font-size: 3.5rem; font-weight: 900; margin-bottom: 1rem;">
+                EUROLEAGUE TEAMS
+            </h1>
+            <p style="font-size: 1.2rem; color: var(--text-secondary); max-width: 700px;">
+                Explore <span style="font-family: 'JetBrains Mono', monospace; color: var(--orange-primary);">20</span> teams and their technology ecosystems across Europe and beyond
+            </p>
+        </div>
+    </section>
+
+    <!-- Search & Filter Controls -->
+    <section style="background: var(--bg-primary); padding: 2rem 0; border-bottom: 1px solid var(--border-color); position: sticky; top: 70px; z-index: 40;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+            <div style="display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: center;">
+                <input 
+                    type="text" 
+                    id="search-input"
+                    placeholder="Search teams by name, city, arena, or country..." 
+                    style="width: 100%; padding: 1rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 0.95rem; outline: none; transition: border-color 0.3s;"
+                    onfocus="this.style.borderColor='var(--border-glow)'"
+                    onblur="this.style.borderColor='var(--border-color)'"
+                >
+                
+                <select 
+                    id="country-filter"
+                    style="padding: 1rem 2rem; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem; cursor: pointer; outline: none;"
+                >
+                    <option value="">All Countries</option>
+                    <!-- Populated by JavaScript -->
+                </select>
+            </div>
+            
+            <div style="margin-top: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-muted);">
+                <span id="results-count" style="color: var(--orange-primary); font-weight: 700;">0</span> teams found
+            </div>
+        </div>
+    </section>
+
+    <!-- Teams Grid -->
+    <section style="padding: 4rem 0; background: var(--bg-primary); min-height: 60vh;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+            <!-- Loading State -->
+            <div id="loading" style="text-align: center; padding: 4rem 0;">
+                <div style="width: 60px; height: 60px; margin: 0 auto; border: 3px solid var(--border-color); border-top-color: var(--orange-primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                <p style="color: var(--text-muted); margin-top: 1.5rem; font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; letter-spacing: 0.1em;">Loading teams...</p>
+            </div>
+            <style>
+                @keyframes spin {
+                    to { transform: rotate(360deg); }
+                }
+            </style>
+            
+            <!-- Error State -->
+            <div id="error" class="hidden" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #FCA5A5; padding: 2rem;">
+                <p style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem;">ERROR LOADING TEAMS</p>
+                <p style="font-size: 0.9rem;">Please refresh the page or try again later.</p>
+            </div>
+            
+            <!-- Teams Grid -->
+            <div id="teams-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
+                <!-- Populated by JavaScript -->
+            </div>
+            
+            <!-- No Results -->
+            <div id="no-results" class="hidden" style="text-align: center; padding: 4rem 0;">
+                <svg style="width: 4rem; height: 4rem; margin: 0 auto; color: var(--text-muted); margin-bottom: 1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 0.5rem;">No teams found matching your search</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Try adjusting your filters or search terms</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Modal -->
+    <div id="team-modal" class="hidden modal-overlay" style="position: fixed; inset: 0; z-index: 1000; overflow-y: auto;">
+        <div style="display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem;">
+            <div id="team-modal-content" class="modal-content" style="background: var(--bg-elevated); max-width: 900px; width: 100%; padding: 3rem; position: relative;">
+                <!-- Content populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-broadcast" style="position: relative;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+                <div>
+                    <h3 style="font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.5rem; margin-bottom: 1rem;">
+                        <span class="logo-accent">SPORTS</span>TECH<span style="color: var(--text-muted); font-weight: 400; font-size: 0.8rem;"> / HUB</span>
+                    </h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">
+                        Decoding the technology ecosystem powering professional basketball performance.
+                    </p>
+                </div>
+                <div>
+                    <h4 style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; font-size: 0.9rem;">Navigation</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 0.75rem;"><a href="vendors.html" style="color: var(--text-secondary); text-decoration: none; transition: color 0.3s; font-size: 0.9rem;" onmouseover="this.style.color='var(--orange-primary)'" onmouseout="this.style.color='var(--text-secondary)'">Technology Vendors</a></li>
+                        <li style="margin-bottom: 0.75rem;"><a href="teams.html" style="color: var(--text-secondary); text-decoration: none; transition: color 0.3s; font-size: 0.9rem;" onmouseover="this.style.color='var(--orange-primary)'" onmouseout="this.style.color='var(--text-secondary)'">Euroleague Teams</a></li>
+                        <li style="margin-bottom: 0.75rem;"><a href="about.html" style="color: var(--text-secondary); text-decoration: none; transition: color 0.3s; font-size: 0.9rem;" onmouseover="this.style.color='var(--orange-primary)'" onmouseout="this.style.color='var(--text-secondary)'">About Platform</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; font-size: 0.9rem;">Data Sources</h4>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.7;">
+                        Information compiled from official team websites, vendor announcements, and verified industry sources.
+                    </p>
+                    <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 1rem;">
+                        <span style="font-family: 'JetBrains Mono', monospace;">Last updated:</span> March 2026
+                    </p>
+                </div>
+            </div>
+            <div style="padding-top: 2rem; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.85rem; color: var(--text-muted);">
+                <span style="font-family: 'JetBrains Mono', monospace;">©</span> 2026 SportsTech Knowledge Hub · Built with AWS serverless architecture · <span style="font-family: 'JetBrains Mono', monospace; color: var(--orange-primary);">v1.0.0</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/teams.js"></script>
+</body>
+</html>

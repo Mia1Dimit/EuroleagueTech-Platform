@@ -1,0 +1,149 @@
+# ============================================================
+# Terraform / Infrastructure
+# ============================================================
+.terraform/
+.terraform.lock.hcl
+tfplan
+tfplan.out
+*.tfstate
+*.tfstate.*
+*.tfvars
+!terraform.tfvars.example
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# ============================================================
+# Environment / Credentials / Secrets
+# ============================================================
+.env
+.env.local
+.env.*.local
+.env.production
+*.key
+*.pem
+*.pub
+credentials
+.aws/credentials
+.aws/config
+secrets.json
+*.secret
+.private/
+
+# ============================================================
+# AWS / Cloud Platform
+# ============================================================
+.aws-sam/
+built_templates.yaml
+samconfig.toml
+**/sam-tests/**
+
+# ============================================================
+# Python
+# ============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# ============================================================
+# Node / Frontend
+# ============================================================
+node_modules/
+npm-debug.log
+yarn-error.log
+.npm
+.yarn
+package-lock.json
+yarn.lock
+dist/
+build/
+
+# ============================================================
+# IDE / Editor
+# ============================================================
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-settings
+
+# ============================================================
+# OS
+# ============================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ============================================================
+# Build / Artifacts
+# ============================================================
+/build/
+/dist/
+*.tar.gz
+*.zip
+
+# ============================================================
+# Personal / Internal
+# ============================================================
+IMPLEMENTATION-PLAN.md
+code-reviews/private-*
+.private/
+*.local.md
+local-notes/
+personal-*/
+
+# ============================================================
+# Temporary Files
+# ============================================================
+*.tmp
+*.temp
+*.bak
+*.swp
+*.log
+.cache/

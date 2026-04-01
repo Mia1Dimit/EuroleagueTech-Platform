@@ -1,0 +1,334 @@
+# ============================================================================
+# Terraform Variables Example - COPY TO terraform.tfvars AND CUSTOMIZE
+# ============================================================================
+# This file shows the structure and available variables.
+# DO NOT COMMIT YOUR ACTUAL terraform.tfvars - USE THIS AS A TEMPLATE.
+#
+# Setup:
+# 1. Copy this file: cp terraform.tfvars.example terraform.tfvars
+# 2. Update values for your AWS account and environment
+# 3. Keep terraform.tfvars in .gitignore (security)
+# ============================================================================
+
+# Global environment settings
+environment     = "dev"
+applicationid   = "spotech-001"  # Replace with your project ID
+applicationname = "EuroleagueTech-Cloud-Platform"
+
+# AWS Region (default: eu-west-1)
+# aws_region     = "eu-west-1"
+
+
+# ============================================================================
+# DynamoDB Tables - Single-Table Design Pattern
+# ============================================================================
+# Main table stores: Teams, Vendors, Products, Partnerships, Staff
+# GSIs enable different query patterns (by category, country, vendor clients)
+# ============================================================================
+
+dynamodb_tables = {
+  main = {
+    table_name       = "spotech-dev-main"
+    hash_key         = "PK"  # Partition key: TEAM#<id>, VENDOR#<id>
+    range_key        = "SK"  # Sort key: METADATA, PARTNERSHIP#
+    billing_mode     = "PAY_PER_REQUEST"
+    
+    global_secondary_indexes = [
+      {
+        name              = "GSI1"
+        hash_key          = "GSI1PK"
+        range_key         = "GSI1SK"
+        projection_type   = "ALL"
+      },
+      {
+        name              = "GSI2"
+        hash_key          = "GSI2PK"
+        range_key         = "GSI2SK"
+        projection_type   = "ALL"
+      },
+      {
+        name              = "GSI3"
+        hash_key          = "GSI3PK"
+        range_key         = "GSI3SK"
+        projection_type   = "ALL"
+      },
+      {
+        name              = "GSI4"
+        hash_key          = "GSI4PK"
+        range_key         = "GSI4SK"
+        projection_type   = "ALL"
+      },
+      {
+        name              = "GSI5"
+        hash_key          = "GSI5PK"
+        range_key         = "GSI5SK"
+        projection_type   = "ALL"
+      }
+    ]
+  }
+}
+
+
+# ============================================================================
+# S3 Buckets - Replace TIMESTAMP with current date (e.g., 20260401)
+# ============================================================================
+# Bucket names MUST be globally unique - use timestamp pattern
+# ============================================================================
+
+s3_buckets = {
+  frontend = {
+    bucket_name            = "spotech-dev-frontend-TIMESTAMP"
+    purpose                = "Static Website Hosting - Frontend"
+    force_destroy          = true  # Dev only
+    blockpublicpolicy      = false
+    ignorepublicacls       = false
+    restrictpublicbuckets  = false
+    enable_versioning      = "Enabled"
+    object_ownership       = "BucketOwnerEnforced"
+  }
+
+  data = {
+    bucket_name      = "spotech-dev-data-TIMESTAMP"
+    purpose          = "Application Data Storage"
+    enable_versioning = "Disabled"
+    object_ownership = "BucketOwnerEnforced"
+  }
+
+  logs = {
+    bucket_name      = "spotech-dev-logs-TIMESTAMP"
+    purpose          = "Application and Access Logs"
+    force_destroy    = true  # Dev only
+  }
+}
+
+
+# ============================================================================
+# CloudWatch Log Groups
+# ============================================================================
+
+cloudwatch_log_groups = {
+  vendors-api = {
+    name = "/aws/lambda/spotech-dev-vendors-api"
+    retention_in_days = 1  # Use higher value in production
+  }
+  
+  teams-api = {
+    name = "/aws/lambda/spotech-dev-teams-api"
+    retention_in_days = 1
+  }
+}
+
+
+# ============================================================================
+# IAM Roles and Policies
+# ============================================================================
+
+iam_roles = {
+  vendors-api-role = {
+    name = "spotech-dev-vendors-api-role"
+    assume_role_policy = "lambda_assume_role_policy.json"
+    policies = {
+      dynamodb-read = {
+        name   = "spotech-dev-vendors-api-dynamodb-read"
+        policy = "lambda_dynamodb_read_policy.json"
+      }
+      cloudwatch-logs = {
+        name   = "spotech-dev-vendors-api-cloudwatch-logs"
+        policy = "lambda_cloudwatch_logs_policy.json"
+      }
+    }
+  }
+
+  teams-api-role = {
+    name = "spotech-dev-teams-api-role"
+    assume_role_policy = "lambda_assume_role_policy.json"
+    policies = {
+      dynamodb-read = {
+        name   = "spotech-dev-teams-api-dynamodb-read"
+        policy = "lambda_dynamodb_read_policy.json"
+      }
+      cloudwatch-logs = {
+        name   = "spotech-dev-teams-api-cloudwatch-logs"
+        policy = "lambda_cloudwatch_logs_policy.json"
+      }
+    }
+  }
+}
+
+
+# ============================================================================
+# Lambda Functions
+# ============================================================================
+
+lambdas = {
+  vendors-api = {
+    function_name        = "spotech-dev-vendors-api"
+    source_dir           = "../backend/src"
+    output_path          = ".terraform/builds/vendors-api.zip"
+    handler              = "handlers.vendors_api.lambda_handler"
+    runtime              = "python3.9"
+    memory_size          = 256
+    timeout              = 10
+    environment_variables = {
+      DYNAMODB_TABLE_NAME = "spotech-dev-main"
+    }
+  }
+
+  teams-api = {
+    function_name        = "spotech-dev-teams-api"
+    source_dir           = "../backend/src"
+    output_path          = ".terraform/builds/teams-api.zip"
+    handler              = "handlers.teams_api.lambda_handler"
+    runtime              = "python3.9"
+    memory_size          = 256
+    timeout              = 10
+    environment_variables = {
+      DYNAMODB_TABLE_NAME = "spotech-dev-main"
+    }
+  }
+}
+
+
+# ============================================================================
+# S3 Website & Encryption Configurations
+# ============================================================================
+
+s3_website_configs = {
+  frontend = {
+    index_document_suffix = "index.html"
+    error_document_key    = "index.html"
+    routing_rules         = []
+  }
+}
+
+s3_sse_configs = {
+  frontend = {}
+  data     = {}
+  logs     = {}
+}
+
+s3_cors_configs = {
+  frontend = {
+    cors_rules = [
+      {
+        allowed_methods = ["GET", "HEAD"]
+        allowed_origins = ["*"]  # Restrict in production
+      }
+    ]
+  }
+}
+
+
+# ============================================================================
+# CloudFront Distribution (CDN)
+# ============================================================================
+
+cloudfront_distributions = {
+  frontend_cdn = {
+    s3_bucket_key = "frontend"
+    purpose       = "Static Website CDN"
+    comment       = "Development environment CDN"
+  }
+}
+
+
+# ============================================================================
+# API Gateway Configuration
+# ============================================================================
+# HTTP API v2 (modern, cheaper, faster than REST API)
+# ============================================================================
+
+api_gtws = {
+  main = {
+    name              = "spotech-dev-api"
+    protocol_type     = "HTTP"
+    description       = "Development API for EuroleagueTech platform"
+
+    integrations = {
+      vendors-integration = {
+        integration_type       = "AWS_PROXY"
+        lambda_key             = "vendors-api"
+        payload_format_version = "2.0"
+        timeout_milliseconds   = 30000
+        description            = "Integration with vendors Lambda"
+      }
+
+      teams-integration = {
+        integration_type       = "AWS_PROXY"
+        lambda_key             = "teams-api"
+        payload_format_version = "2.0"
+        timeout_milliseconds   = 30000
+        description            = "Integration with teams Lambda"
+      }
+    }
+
+    routes = {
+      get-vendors = {
+        route_key           = "GET /vendors"
+        integration_key     = "vendors-integration"
+        authorization_type  = "NONE"
+        api_key_required    = false
+      }
+
+      get-vendor-by-id = {
+        route_key           = "GET /vendors/{vendorId}"
+        integration_key     = "vendors-integration"
+        authorization_type  = "NONE"
+        api_key_required    = false
+      }
+
+      get-teams = {
+        route_key           = "GET /teams"
+        integration_key     = "teams-integration"
+        authorization_type  = "NONE"
+        api_key_required    = false
+      }
+
+      get-team-by-id = {
+        route_key           = "GET /teams/{teamId}"
+        integration_key     = "teams-integration"
+        authorization_type  = "NONE"
+        api_key_required    = false
+      }
+    }
+
+    stages = {
+      dev = {
+        name                 = "dev"
+        auto_deploy          = true
+        description          = "Development stage"
+        detailed_metrics_enabled = true
+        logging_level        = "INFO"
+        data_trace_enabled   = true
+      }
+    }
+  }
+}
+
+# ============================================================================
+# NOTES FOR DEPLOYING
+# ============================================================================
+# 
+# 1. AWS ACCOUNT & CREDENTIALS:
+#    - Ensure your AWS credentials are configured locally
+#    - Run: aws sts get-caller-identity (verify account access)
+#    - Region should be eu-west-1 (Ireland)
+#
+# 2. S3 BUCKET NAMES:
+#    - Replace TIMESTAMP with current date (e.g., 20260401)
+#    - S3 bucket names must be GLOBALLY UNIQUE
+#    - Name pattern: spotech-dev-{purpose}-{timestamp}
+#
+# 3. TERRAFORM INITIALIZATION:
+#    cd infrastructure
+#    terraform init -backend-config=backend-config-dev.tfvars
+#    terraform plan -var-file=terraform.tfvars
+#    terraform apply -var-file=terraform.tfvars
+#
+# 4. SECURITY CONSIDERATIONS:
+#    - Do NOT commit terraform.tfvars to version control
+#    - Use .gitignore to exclude *.tfvars (excluding .example)
+#    - Rotate AWS credentials regularly
+#    - Review IAM policies quarterly
+#
+# ============================================================================

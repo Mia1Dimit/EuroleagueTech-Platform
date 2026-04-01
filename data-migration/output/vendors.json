@@ -1,0 +1,451 @@
+[
+  {
+    "vendor_id": "asb-glassfloor",
+    "name": "ASB GlassFloor",
+    "headquarters": "Lauterbach, Germany",
+    "founded": "1965 (ASB Systembau GmbH) | GlassFloor launched 2013",
+    "market_position": "",
+    "categories": ["Facilities & Infrastructure"],
+    "products": ["ASB GlassFloor"]
+  },
+  {
+    "vendor_id": "authena",
+    "name": "Authena",
+    "headquarters": "London, United Kingdom",
+    "founded": "2018",
+    "market_position": "Niche Innovator",
+    "categories": ["Fan Engagement"],
+    "products": ["Authena Digital Authentication Platform"]
+  },
+  {
+    "vendor_id": "bauerfeind",
+    "name": "Bauerfeind",
+    "headquarters": "Zeulenroda-Triebes, Germany",
+    "founded": "1929",
+    "market_position": "Premium medical-grade supports",
+    "categories": ["Recovery & Medical"],
+    "products": [
+      "Sports Compression Socks",
+      "Sports Compression Sleeves",
+      "Compression Tights/Shorts",
+      "GenuTrain",
+      "GenuTrain S",
+      "GenuTrain A3",
+      "MalleoTrain",
+      "MalleoTrain S",
+      "EpiTrain",
+      "ManuTrain",
+      "LumboTrain",
+      "RibroTrain",
+      "VenoTrain"
+    ]
+  },
+  {
+    "vendor_id": "catapult-sports",
+    "name": "Catapult Sports",
+    "headquarters": "Melbourne, Australia",
+    "founded": "2006",
+    "market_position": "Global Leader",
+    "categories": ["Performance Tracking", "Video Analysis"],
+    "products": [
+      "Vector Core",
+      "Vector T7",
+      "Vector S8",
+      "OpenField",
+      "Vision for Basketball",
+      "Catapult One"
+    ]
+  },
+  {
+    "vendor_id": "cerc-therapy",
+    "name": "Cerc Therapy",
+    "headquarters": "Italy",
+    "founded": "2010s",
+    "market_position": "",
+    "categories": ["Recovery & Medical"],
+    "products": ["IPRS Platform"]
+  },
+  {
+    "vendor_id": "cetilar",
+    "name": "Cetilar",
+    "headquarters": "Pisa, Italy",
+    "founded": "2018",
+    "market_position": "",
+    "categories": ["Recovery & Medical"],
+    "products": [
+      "Cetilar Crema",
+      "Cetilar Patch",
+      "Cetilar Oro",
+      "Cetilar Nutrition"
+    ]
+  },
+  {
+    "vendor_id": "conartia",
+    "name": "Conartia",
+    "headquarters": "Greece",
+    "founded": "~2018-2020",
+    "market_position": "Regional Systems Integrator",
+    "categories": ["Data Analytics", "Performance Tracking"],
+    "products": ["Distrbuting in Greece products of Kinexon Sports"]
+  },
+  {
+    "vendor_id": "datatalk",
+    "name": "DataTalks",
+    "headquarters": "Sweden",
+    "founded": "~2016-2018",
+    "market_position": "Emerging Leader (Fan Engagement/CDP)",
+    "categories": ["Business Operations", "Data Analytics", "Fan Engagement"],
+    "products": [
+      "AI Sports CDP",
+      "AI Marketing Department"
+    ]
+  },
+  {
+    "vendor_id": "djo-global",
+    "name": "DJO (DJO Global / Enovis)",
+    "headquarters": "Carlsbad, California, USA",
+    "founded": "1978",
+    "market_position": "",
+    "categories": ["Recovery & Medical"],
+    "products": [
+      "Game Ready",
+      "Aircast Cryo/Cuff",
+      "DonJoy Defiance",
+      "DonJoy Armor",
+      "Reaction Web",
+      "Aircast A60",
+      "Aircast Stirrup",
+      "Compex",
+      "Chattanooga",
+      "LumboTrain"
+    ]
+  },
+  {
+    "vendor_id": "evo4hp",
+    "name": "EVO Human Performance (Evo4HP)",
+    "headquarters": "Greece",
+    "founded": "~2019",
+    "market_position": "Emerging Innovator",
+    "categories": ["Data Analytics", "Performance Tracking", "Recovery & Medical"],
+    "products": [
+      "ArtemYs",
+      "nioVe"
+    ]
+  },
+  {
+    "vendor_id": "firstbeat-sports",
+    "name": "Firstbeat Sports (Garmin)",
+    "headquarters": "Jyväskylä, Finland",
+    "founded": "2002",
+    "market_position": "Heart Rate Variability Leader",
+    "categories": ["Performance Tracking"],
+    "products": ["Firstbeat Sports Sensor"]
+  },
+  {
+    "vendor_id": "galanis-sports-data",
+    "name": "Galanis Sports Data",
+    "headquarters": "Athens, Greece",
+    "founded": "",
+    "market_position": "Official Euroleague Provider",
+    "categories": ["Data Analytics", "Video Analysis"],
+    "products": [
+      "Official Game Statistics Platform",
+      "Instant Replay System"
+    ]
+  },
+  {
+    "vendor_id": "globant-fanexp",
+    "name": "Globant FanExp",
+    "headquarters": "Luxembourg",
+    "founded": "2003 (Globant), FanExp acquired",
+    "market_position": "",
+    "categories": ["Fan Engagement"],
+    "products": ["FanExp Platform"]
+  },
+  {
+    "vendor_id": "gsa-sport-gsa-genius",
+    "name": "GSA Sport / GSA Genius",
+    "headquarters": "",
+    "founded": "",
+    "market_position": "",
+    "categories": ["Performance Tracking"],
+    "products": ["GSA Genius Electronic Athletic Clothing"]
+  },
+  {
+    "vendor_id": "hudl-sportscode",
+    "name": "Hudl / Sportscode",
+    "headquarters": "Lincoln, Nebraska, USA",
+    "founded": "2006",
+    "market_position": "Video Analysis Leader",
+    "categories": ["Video Analysis"],
+    "products": [
+      "Hudl",
+      "Hudl Sportscode",
+      "Hudl Focus",
+      "Hudl Assist"
+    ]
+  },
+  {
+    "vendor_id": "human-tecar",
+    "name": "Human Tecar",
+    "headquarters": "Italy",
+    "founded": "",
+    "market_position": "",
+    "categories": ["Recovery & Medical"],
+    "products": [
+      "TECAR HCR 1002",
+      "TECAR Physio",
+      "TECAR Sport"
+    ]
+  },
+  {
+    "vendor_id": "incrediwear",
+    "name": "Incrediwear (Eywa)",
+    "headquarters": "California, USA",
+    "founded": "",
+    "market_position": "",
+    "categories": ["Recovery & Medical"],
+    "products": [
+      "Knee Sleeves",
+      "Ankle Sleeves",
+      "Elbow/Wrist Sleeves",
+      "Calf Sleeves",
+      "Compression Shirts",
+      "Compression Pants/Leggings",
+      "Compression Shorts",
+      "Back Support",
+      "Recovery Socks"
+    ]
+  },
+  {
+    "vendor_id": "isokinetic",
+    "name": "Isokinetic",
+    "headquarters": "Italy",
+    "founded": "",
+    "market_position": "",
+    "categories": ["Recovery & Medical"],
+    "products": []
+  },
+  {
+    "vendor_id": "k-sport-science",
+    "name": "K Sport Science",
+    "headquarters": "",
+    "founded": "",
+    "market_position": "",
+    "categories": ["Recovery & Medical"],
+    "products": [
+      "Whole-Body Cryotherapy Chamber",
+      "Cryo Pen/Wand"
+    ]
+  },
+  {
+    "vendor_id": "kangatech-kt360",
+    "name": "KangaTech KT360",
+    "headquarters": "",
+    "founded": "",
+    "market_position": "",
+    "categories": ["Performance Tracking"],
+    "products": ["KT360 Isokinetic Training Rig"]
+  },
+  {
+    "vendor_id": "kinexon",
+    "name": "KINEXON",
+    "headquarters": "Munich, Germany",
+    "founded": "2012",
+    "market_position": "European Market Leader",
+    "categories": ["Performance Tracking", "Video Analysis"],
+    "products": [
+      "KINEXON PERFORM LPS",
+      "KINEXON PERFORM IMU",
+      "KINEXON COMPETE Vision"
+    ]
+  },
+  {
+    "vendor_id": "limfa",
+    "name": "Limfa",
+    "headquarters": "Italy",
+    "founded": "",
+    "market_position": "",
+    "categories": ["Recovery & Medical"],
+    "products": []
+  },
+  {
+    "vendor_id": "microsoft-azure",
+    "name": "Microsoft",
+    "headquarters": "Redmond, Washington, USA",
+    "founded": "1975",
+    "market_position": "Global Technology Leader",
+    "categories": ["Data Analytics"],
+    "products": [
+      "Microsoft Azure",
+      "Microsoft 365",
+      "Microsoft Dynamics 365"
+    ]
+  },
+  {
+    "vendor_id": "sap-sports-one",
+    "name": "SAP Sports One",
+    "headquarters": "Walldorf, Germany",
+    "founded": "1972 (SAP)",
+    "market_position": "Enterprise Software Leader",
+    "categories": ["Data Analytics"],
+    "products": ["SAP Sports One Platform"]
+  },
+  {
+    "vendor_id": "sdi-sportfloor",
+    "name": "SDI Sport Floor",
+    "headquarters": "",
+    "founded": "",
+    "market_position": "",
+    "categories": ["Facilities & Infrastructure"],
+    "products": [
+      "Premium Hardwood Basketball Courts",
+      "PVC Sports Flooring",
+      "Portable Court Systems"
+    ]
+  },
+  {
+    "vendor_id": "second-spectrum",
+    "name": "Second Spectrum",
+    "headquarters": "Los Angeles, California, USA",
+    "founded": "2013",
+    "market_position": "NBA Official Partner",
+    "categories": ["Data Analytics", "Video Analysis"],
+    "products": []
+  },
+  {
+    "vendor_id": "sixtus",
+    "name": "Sixtus",
+    "headquarters": "Italy",
+    "founded": "",
+    "market_position": "",
+    "categories": ["Recovery & Medical"],
+    "products": [
+      "Arnica Forte",
+      "Deocontract Gel",
+      "Defaticante",
+      "Sport Oil",
+      "Forte Oil",
+      "Ghiaccio Spray",
+      "Thermo",
+      "Criogel",
+      "Chamois Cream"
+    ]
+  },
+  {
+    "vendor_id": "spiideo-perform",
+    "name": "Spiideo",
+    "headquarters": "Uppsala, Sweden",
+    "founded": "2014",
+    "market_position": "",
+    "categories": ["Video Analysis"],
+    "products": ["Spiideo Perform"]
+  },
+  {
+    "vendor_id": "statathlon",
+    "name": "Statathlon",
+    "headquarters": "",
+    "founded": "",
+    "market_position": "",
+    "categories": ["Data Analytics", "Scouting & Recruitment"],
+    "products": [
+      "Scouting & Transfer Analysis",
+      "Athlete Condition Monitoring & Load Management",
+      "Game Preparation & Strategic Insights"
+    ]
+  },
+  {
+    "vendor_id": "statsports",
+    "name": "STATSports",
+    "headquarters": "Newry, Northern Ireland",
+    "founded": "2007",
+    "market_position": "GPS Wearables Leader",
+    "categories": ["Performance Tracking"],
+    "products": [
+      "APEX Athlete Series",
+      "APEX Pro Series",
+      "APEX Indoor",
+      "Sonra Platform"
+    ]
+  },
+  {
+    "vendor_id": "syform",
+    "name": "Syform",
+    "headquarters": "Italy",
+    "founded": "",
+    "market_position": "",
+    "categories": ["Recovery & Medical"],
+    "products": [
+      "Energy Gels",
+      "Energy Bars",
+      "Protein Supplements",
+      "BCAAs",
+      "EAAs",
+      "Recovery Drinks",
+      "Creatine",
+      "Beta-Alanine"
+    ]
+  },
+  {
+    "vendor_id": "synergy-sports",
+    "name": "Synergy Sports (Sportradar)",
+    "headquarters": "San Antonio, Texas, USA",
+    "founded": "2005",
+    "market_position": "Industry Standard for Scouting",
+    "categories": ["Scouting & Recruitment", "Video Analysis"],
+    "products": ["Synergy Sports Platform"]
+  },
+  {
+    "vendor_id": "technogym",
+    "name": "Technogym",
+    "headquarters": "Cesena, Italy",
+    "founded": "1983",
+    "market_position": "Global Fitness Equipment Leader",
+    "categories": ["Facilities & Infrastructure"],
+    "products": [
+      "SELECTION Line",
+      "PURE Line",
+      "SKILLRUN",
+      "SKILLROW",
+      "BIKE",
+      "CROSS",
+      "RUN",
+      "SKILLTOOLS",
+      "KINESIS",
+      "mywellness Platform",
+      "CHECKUP"
+    ]
+  },
+  {
+    "vendor_id": "wimu-pro-realtrack",
+    "name": "WIMU PRO (RealTrack Systems)",
+    "headquarters": "Almería, Spain",
+    "founded": "2010",
+    "market_position": "Spanish Market Leader",
+    "categories": ["Performance Tracking"],
+    "products": ["WIMU PRO"]
+  },
+  {
+    "vendor_id": "wsc-sports",
+    "name": "WSC Sports",
+    "headquarters": "Ramat Gan, Israel",
+    "founded": "2011",
+    "market_position": "AI Video Leader",
+    "categories": ["Content & Broadcasting", "Fan Engagement"],
+    "products": [
+      "WSC Sports Platform", 
+      "Around the Game", 
+      "In-App Stories", 
+      "Discovery Network", 
+      "Clipro"]
+  },
+  {
+    "vendor_id": "yinzcam",
+    "name": "YinzCam",
+    "headquarters": "San Francisco, California, USA",
+    "founded": "2009",
+    "market_position": "Sports App Platform Leader",
+    "categories": ["Fan Engagement"],
+    "products": ["YinzCam Platform"]
+  }
+]

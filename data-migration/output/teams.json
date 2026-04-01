@@ -1,0 +1,257 @@
+[
+  {
+    "team_id": "anadolu-efes-istanbul",
+    "name": "Anadolu Efes Spor Kulübü",
+    "country": "Turkey",
+    "arena": "Turkcell Basketball Development Centre",
+    "arena_capacity": 10000,
+    "euroleague_status": "",
+    "last_updated": "March 7, 2026",
+    "partnerships": []
+  },
+  {
+    "team_id": "asvel-villeurbanne",
+    "name": "LDLC ASVEL Villeurbanne",
+    "country": "France",
+    "arena": "LDLC Arena",
+    "arena_capacity": 12523,
+    "euroleague_status": "Wild card entrant 2019, 1997 Final Four participant",
+    "last_updated": "March 6, 2026",
+    "partnerships": []
+  },
+  {
+    "team_id": "barcelona-bc",
+    "name": "FC Barcelona (Barça)",
+    "country": "Spain",
+    "arena": "Palau Blaugrana",
+    "arena_capacity": 7585,
+    "euroleague_status": "Founding member, 2-time champion (2003, 2010)",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "WIMU PRO (RealTrack Systems)"
+    ]
+  },
+  {
+    "team_id": "baskonia-vitoria-gasteiz",
+    "name": "Kosner Baskonia (Saski Baskonia SAD)",
+    "country": "Spain",
+    "arena": "Fernando Buesa Arena",
+    "arena_capacity": 15544,
+    "euroleague_status": "Euroleague perennial participant",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "WSC Sports"
+    ]
+  },
+  {
+    "team_id": "bayern-munich-basketball",
+    "name": "FC Bayern München Basketball GmbH",
+    "country": "Germany",
+    "arena": "SAP Garden",
+    "arena_capacity": 11500,
+    "euroleague_status": "Euroleague participant",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "KINEXON PERFORM",
+      "ASB GlassFloor",
+      "SAP Sports One"
+    ]
+  },
+  {
+    "team_id": "crvena-zvezda-belgrade",
+    "name": "Košarkaški klub Crvena zvezda Meridianbet Beograd",
+    "country": "Serbia",
+    "arena": "Stark Arena",
+    "arena_capacity": 18386,
+    "euroleague_status": "",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "Authena"
+    ]
+  },
+  {
+    "team_id": "dubai-basketball",
+    "name": "Dubai Basketball",
+    "country": "United Arab Emirates",
+    "arena": "Coca-Cola Arena",
+    "arena_capacity": 17000,
+    "euroleague_status": "",
+    "last_updated": "March 7, 2026",
+    "partnerships": [
+      "Bauerfeind"
+    ]
+  },
+  {
+    "team_id": "fenerbahce-beko-istanbul",
+    "name": "Fenerbahçe Spor Kulübü Basketball",
+    "country": "Turkey",
+    "arena": "Ülker Sports and Event Hall",
+    "arena_capacity": 13800,
+    "euroleague_status": "2-time EuroLeague Champions (2017, 2025)",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "KINEXON PERFORM IMU"
+    ]
+  },
+  {
+    "team_id": "hapoel-tel-aviv",
+    "name": "Hapoel IBI Tel Aviv",
+    "country": "Israel",
+    "arena": "Drive In Arena",
+    "arena_capacity": 11700,
+    "euroleague_status": "Euroleague participant",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "Galanis Sports Data"
+    ]
+  },
+  {
+    "team_id": "maccabi-tel-aviv",
+    "name": "Maccabi Rapyd Tel Aviv",
+    "country": "Israel",
+    "arena": "Menora Mivtachim Arena",
+    "arena_capacity": 11700,
+    "euroleague_status": "6-time EuroLeague Champions",
+    "last_updated": "March 7, 2026",
+    "partnerships": []
+  },
+  {
+    "team_id": "monaco-basket",
+    "name": "AS Monaco Basket",
+    "country": "Monaco",
+    "arena": "Salle Gaston Médecin",
+    "arena_capacity": 5000,
+    "euroleague_status": "Euroleague participant",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "STATSports APEX"
+    ]
+  },
+  {
+    "team_id": "olimpia-milano",
+    "name": "Pallacanestro Olimpia Milano",
+    "country": "Italy",
+    "arena": "Unipol Forum",
+    "arena_capacity": 12800,
+    "euroleague_status": "3-time EuroLeague Champions",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "Technogym",
+      "DJO",
+      "Human Tecar",
+      "Cerc Therapy",
+      "Cetilar",
+      "Incrediwear (Eywa)",
+      "Limfa",
+      "Sixtus",
+      "Syform"
+    ]
+  },
+  {
+    "team_id": "olympiakos-piraeus",
+    "name": "Olympiakos B.C.",
+    "country": "Greece",
+    "arena": "Peace and Friendship Stadium",
+    "arena_capacity": 11640,
+    "euroleague_status": "3-time EuroLeague Champions",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "Evo4HP ArtemYs",
+      "Galanis Sports Data"
+    ]
+  },
+  {
+    "team_id": "panathinaikos-athens",
+    "name": "Panathinaikos Athens",
+    "country": "Greece",
+    "arena": "Telekom Center Athens",
+    "arena_capacity": 18300,
+    "euroleague_status": "7-time EuroLeague Champions",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "KINEXON Sports",
+      "ASB GlassFloor",
+      "Galanis Sports Data"
+    ]
+  },
+  {
+    "team_id": "paris-basketball",
+    "name": "Paris Basketball",
+    "country": "France",
+    "arena": "Adidas Arena",
+    "arena_capacity": 8000,
+    "euroleague_status": "Euroleague participant",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "Globant FanExp"
+    ]
+  },
+  {
+    "team_id": "partizan-belgrade",
+    "name": "Košarkaški klub Partizan Mozzart Bet Beograd",
+    "country": "Serbia",
+    "arena": "Stark Arena",
+    "arena_capacity": 18386,
+    "euroleague_status": "1-time EuroLeague Champion (1992)",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "DataTalks"
+    ]
+  },
+  {
+    "team_id": "real-madrid",
+    "name": "Real Madrid CF (Basketball Section)",
+    "country": "Spain",
+    "arena": "WiZink Center",
+    "arena_capacity": 15000,
+    "euroleague_status": "11-time EuroLeague Champions (record)",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "Catapult Sports",
+      "Microsoft Azure/Office 365"
+    ]
+  },
+  {
+    "team_id": "valencia-basket",
+    "name": "Valencia Basket Club",
+    "country": "Spain",
+    "arena": "La Fonteta",
+    "arena_capacity": 9000,
+    "euroleague_status": "EuroCup champion 2023",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "KangaTech KT360",
+      "SDI Sport Floor"
+    ]
+  },
+  {
+    "team_id": "virtus-bologna",
+    "name": "Virtus Pallacanestro Bologna",
+    "country": "Italy",
+    "arena": "Seg Virtus Arena",
+    "arena_capacity": 10200,
+    "euroleague_status": "2-time EuroLeague Champions",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "Technogym",
+      "DJO",
+      "Firstbeat Sports",
+      "Spiideo Perform",
+      "Isokinetic"
+    ]
+  },
+  {
+    "team_id": "zalgiris-kaunas",
+    "name": "BC Žalgiris Kaunas",
+    "country": "Lithuania",
+    "arena": "Žalgirio Arena",
+    "arena_capacity": 15415,
+    "euroleague_status": "1-time EuroLeague Champion (1999)",
+    "last_updated": "March 6, 2026",
+    "partnerships": [
+      "KINEXON PERFORM LPS",
+      "KINEXON PERFORM IMU",
+      "KINEXON COMPETE Vision"
+    ]
+  }
+]
