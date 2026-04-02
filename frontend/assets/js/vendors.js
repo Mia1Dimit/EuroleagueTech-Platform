@@ -1,5 +1,16 @@
 // API Configuration
 const API_BASE_URL = 'https://1o8pl970wc.execute-api.eu-west-1.amazonaws.com/dev';
+const LANDING_TECH_CATEGORIES = [
+    'Performance Tracking',
+    'Video Analysis',
+    'Analytics & AI',
+    'Recovery & Medical',
+    'Fan Engagement',
+    'Facilities & Infrastructure',
+    'Business Operations',
+    'Scouting & Recruitment',
+    'Content & Broadcasting'
+];
 
 // State
 let allVendors = [];
@@ -13,6 +24,8 @@ const resultsCount = document.getElementById('results-count');
 const loading = document.getElementById('loading');
 const error = document.getElementById('error');
 const noResults = document.getElementById('no-results');
+const vendorsHeadlineCount = document.getElementById('vendors-headline-count');
+const vendorsHeadlineCategoryCount = document.getElementById('vendors-headline-category-count');
 
 // Fetch vendors from API
 async function loadVendors() {
@@ -24,9 +37,11 @@ async function loadVendors() {
         if (!response.ok) throw new Error('Failed to fetch vendors');
         
         const data = await response.json();
-        // API returns {count: 36, vendors: [...]} not direct array
+        // API may return {count, vendors: [...]} or a direct vendors array
         allVendors = data.vendors || data; // Handle both formats
         filteredVendors = [...allVendors];
+
+        updateHeadlineMetrics();
         
         loading.classList.add('hidden');
         displayVendors();
@@ -35,6 +50,16 @@ async function loadVendors() {
         console.error('Error loading vendors:', err);
         loading.classList.add('hidden');
         error.classList.remove('hidden');
+    }
+}
+
+function updateHeadlineMetrics() {
+    if (vendorsHeadlineCount) {
+        vendorsHeadlineCount.textContent = allVendors.length;
+    }
+
+    if (vendorsHeadlineCategoryCount) {
+        vendorsHeadlineCategoryCount.textContent = LANDING_TECH_CATEGORIES.length;
     }
 }
 

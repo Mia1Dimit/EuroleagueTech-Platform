@@ -13,7 +13,7 @@
         <div style="max-width: 1400px; margin: 0 auto; padding: 1.25rem 2rem;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <a href="index.html" class="logo-text" style="text-decoration: none;">
-                    <span class="logo-accent">SPORTS</span>TECH <span style="color: var(--text-muted); font-weight: 400; font-size: 0.9rem;">/ HUB</span>
+                    <span class="logo-accent">EUROLEAGUE</span>TECH <span style="color: var(--text-muted); font-weight: 400; font-size: 0.9rem;">/ HUB</span>
                 </a>
                 <div style="display: flex; gap: 3rem; align-items: center;">
                     <a href="index.html" class="nav-link active" style="text-decoration: none;">Home</a>
@@ -46,7 +46,7 @@
                 
                 <div class="hero-cta-group">
                     <button class="btn-primary" onclick="window.location.href='vendors.html'">
-                        Explore 36 Vendors →
+                        Explore <span id="home-vendor-count-cta"></span> Vendors →
                     </button>
                     <button class="btn-secondary" onclick="window.location.href='teams.html'">
                         Browse Teams
@@ -59,15 +59,15 @@
                     </div>
                     <div style="display: flex; gap: 2rem; margin-top: 1rem; flex-wrap: wrap;">
                         <div>
-                            <span style="font-family: 'JetBrains Mono', monospace; color: var(--orange-primary); font-weight: 600;">20</span>
+                            <span id="home-platform-team-count" style="font-family: 'JetBrains Mono', monospace; color: var(--orange-primary); font-weight: 600;"></span>
                             <span style="color: var(--text-secondary); margin-left: 0.5rem;">Euroleague Teams</span>
                         </div>
                         <div>
-                            <span style="font-family: 'JetBrains Mono', monospace; color: var(--accent-blue); font-weight: 600;">9</span>
+                            <span id="home-platform-category-count" style="font-family: 'JetBrains Mono', monospace; color: var(--accent-blue); font-weight: 600;"></span>
                             <span style="color: var(--text-secondary); margin-left: 0.5rem;">Tech Categories</span>
                         </div>
                         <div>
-                            <span style="font-family: 'JetBrains Mono', monospace; color: var(--accent-green); font-weight: 600;">104</span>
+                            <span id="home-platform-datapoint-count" style="font-family: 'JetBrains Mono', monospace; color: var(--accent-green); font-weight: 600;"></span>
                             <span style="color: var(--text-secondary); margin-left: 0.5rem;">Data Points</span>
                         </div>
                     </div>
@@ -81,19 +81,19 @@
         <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2;">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 4rem;">
                 <div class="stat-item">
-                    <div class="stat-number animate-count" data-target="36">0</div>
+                    <div class="stat-number animate-count" id="home-vendor-count-stat" data-target=""></div>
                     <div class="stat-label">Technology Vendors</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number animate-count" data-target="20">0</div>
+                    <div class="stat-number animate-count" id="home-team-count-stat" data-target=""></div>
                     <div class="stat-label">Euroleague Teams</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number animate-count" data-target="9">0</div>
+                    <div class="stat-number animate-count" id="home-category-count-stat" data-target=""></div>
                     <div class="stat-label">Tech Categories</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number animate-count" data-target="104">0</div>
+                    <div class="stat-number animate-count" id="home-datapoint-count-stat" data-target=""></div>
                     <div class="stat-label">Data Points</div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                     // TECHNOLOGY LANDSCAPE
                 </div>
                 <h2 style="font-size: 3.5rem; font-weight: 900; margin-bottom: 1rem;">
-                    9 CORE CATEGORIES
+                    <span id="home-categories-heading-count"></span> CORE CATEGORIES
                 </h2>
                 <p style="font-size: 1.2rem; color: var(--text-secondary); max-width: 700px;">
                     From performance tracking to fan engagement - explore the complete technology ecosystem powering professional basketball.
@@ -266,15 +266,15 @@
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
                 <div>
                     <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--orange-primary); margin-bottom: 0.5rem;">✓ VENDOR INTELLIGENCE</div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">36 technology providers mapped by category, product, and market position</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;"><span id="home-vendor-count-summary"></span> technology providers mapped by category, product, and market position</p>
                 </div>
                 <div>
                     <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--accent-blue); margin-bottom: 0.5rem;">✓ TEAM TECH STACKS</div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">20 Euroleague teams with verified technology partnerships</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;"><span id="home-team-count-summary"></span> Euroleague teams with verified technology partnerships</p>
                 </div>
                 <div>
                     <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--accent-green); margin-bottom: 0.5rem;">✓ MARKET LANDSCAPE</div>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">9 technology categories with complete ecosystem mapping</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;"><span id="home-market-category-count"></span> technology categories with complete ecosystem mapping</p>
                 </div>
             </div>
         </div>
@@ -318,9 +318,132 @@
 
     <!-- Kinetic Number Counter Script -->
     <script>
+        const API_BASE_URL = 'https://1o8pl970wc.execute-api.eu-west-1.amazonaws.com/dev';
+        const LANDING_TECH_CATEGORIES = [
+            'Performance Tracking',
+            'Video Analysis',
+            'Analytics & AI',
+            'Recovery & Medical',
+            'Fan Engagement',
+            'Facilities & Infrastructure',
+            'Business Operations',
+            'Scouting & Recruitment',
+            'Content & Broadcasting'
+        ];
+
+        function normalizeCategory(category) {
+            if (!category) {
+                return '';
+            }
+
+            const cleanCategory = category.replace(/^CATEGORY#/, '').toLowerCase();
+            const categoryMap = {
+                'data-analytics': 'Analytics & AI',
+                'content-and-broadcasting': 'Content & Broadcasting',
+                'recovery-and-medical': 'Recovery & Medical',
+                'facilities-and-infrastructure': 'Facilities & Infrastructure',
+                'scouting-and-recruitment': 'Scouting & Recruitment',
+                'performance-tracking': 'Performance Tracking',
+                'video-analysis': 'Video Analysis',
+                'fan-engagement': 'Fan Engagement',
+                'business-operations': 'Business Operations',
+                'data analytics': 'Analytics & AI',
+                'content and broadcasting': 'Content & Broadcasting',
+                'recovery and medical': 'Recovery & Medical',
+                'facilities and infrastructure': 'Facilities & Infrastructure',
+                'scouting and recruitment': 'Scouting & Recruitment',
+                'performance tracking': 'Performance Tracking',
+                'video analysis': 'Video Analysis',
+                'fan engagement': 'Fan Engagement',
+                'business operations': 'Business Operations'
+            };
+
+            return categoryMap[cleanCategory] || category;
+        }
+
+        function extractList(data, key) {
+            if (Array.isArray(data)) {
+                return data;
+            }
+            if (data && Array.isArray(data[key])) {
+                return data[key];
+            }
+            return [];
+        }
+
+        function setText(id, value) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.textContent = value;
+            }
+        }
+
+        function setCounterTarget(id, value) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.setAttribute('data-target', String(value));
+                element.textContent = '';
+            }
+        }
+
+        async function loadHomeMetrics() {
+            const [vendorsResponse, teamsResponse] = await Promise.all([
+                fetch(`${API_BASE_URL}/vendors`),
+                fetch(`${API_BASE_URL}/teams`)
+            ]);
+
+            if (!vendorsResponse.ok || !teamsResponse.ok) {
+                throw new Error('Failed to fetch homepage metrics');
+            }
+
+            const vendorsData = await vendorsResponse.json();
+            const teamsData = await teamsResponse.json();
+            const vendors = extractList(vendorsData, 'vendors');
+            const teams = extractList(teamsData, 'teams');
+
+            const vendorCount = vendors.length;
+            const teamCount = teams.length;
+            const uniqueCategories = new Set();
+
+            vendors.forEach(vendor => {
+                const categories = Array.isArray(vendor.Categories) && vendor.Categories.length > 0
+                    ? vendor.Categories
+                    : (vendor.PrimaryCategory ? [vendor.PrimaryCategory] : []);
+
+                categories.forEach(category => {
+                    const normalized = normalizeCategory(category);
+                    if (normalized) {
+                        uniqueCategories.add(normalized);
+                    }
+                });
+            });
+
+            const categoryCount = LANDING_TECH_CATEGORIES.length;
+            const vendorProductsCount = vendors.reduce((sum, vendor) => sum + (Array.isArray(vendor.Products) ? vendor.Products.length : 0), 0);
+            const teamPartnershipsCount = teams.reduce((sum, team) => sum + (Array.isArray(team.Partnerships) ? team.Partnerships.length : 0), 0);
+            const dataPointCount = vendorProductsCount + teamPartnershipsCount;
+
+            setText('home-vendor-count-cta', vendorCount);
+            setText('home-vendor-count-summary', vendorCount);
+            setText('home-platform-team-count', teamCount);
+            setText('home-platform-category-count', categoryCount);
+            setText('home-platform-datapoint-count', dataPointCount);
+            setText('home-categories-heading-count', categoryCount);
+            setText('home-team-count-summary', teamCount);
+            setText('home-market-category-count', categoryCount);
+
+            setCounterTarget('home-vendor-count-stat', vendorCount);
+            setCounterTarget('home-team-count-stat', teamCount);
+            setCounterTarget('home-category-count-stat', categoryCount);
+            setCounterTarget('home-datapoint-count-stat', dataPointCount);
+        }
+
         // Animated Number Counter
         function animateCounter(element) {
             const target = parseInt(element.getAttribute('data-target'));
+            if (!Number.isFinite(target)) {
+                return;
+            }
             const duration = 2000;
             const increment = target / (duration / 16);
             let current = 0;
@@ -342,7 +465,8 @@
                 if (entry.isIntersecting) {
                     const counters = entry.target.querySelectorAll('.animate-count');
                     counters.forEach(counter => {
-                        if (counter.textContent === '0') {
+                        if (counter.getAttribute('data-target') && counter.dataset.animated !== 'true') {
+                            counter.dataset.animated = 'true';
                             animateCounter(counter);
                         }
                     });
@@ -350,10 +474,20 @@
             });
         }, { threshold: 0.5 });
         
-        const statsSection = document.querySelector('.stats-broadcast');
-        if (statsSection) {
-            observer.observe(statsSection);
+        async function initializeHomePage() {
+            try {
+                await loadHomeMetrics();
+            } catch (error) {
+                console.error('Error loading homepage metrics:', error);
+            }
+
+            const statsSection = document.querySelector('.stats-broadcast');
+            if (statsSection) {
+                observer.observe(statsSection);
+            }
         }
+
+        document.addEventListener('DOMContentLoaded', initializeHomePage);
     </script>
 </body>
 </html>

@@ -13,6 +13,8 @@ const resultsCount = document.getElementById('results-count');
 const loading = document.getElementById('loading');
 const error = document.getElementById('error');
 const noResults = document.getElementById('no-results');
+const teamsHeadlineCount = document.getElementById('teams-headline-count');
+const teamsHeadlineCountryCount = document.getElementById('teams-headline-country-count');
 
 // Fetch teams from API
 async function loadTeams() {
@@ -27,6 +29,8 @@ async function loadTeams() {
         // API returns {count: 20, teams: [...]} not direct array
         allTeams = data.teams || data; // Handle both formats
         filteredTeams = [...allTeams];
+
+        updateTeamsHeadlineMetrics();
         
         populateCountryFilter();
         loading.classList.add('hidden');
@@ -36,6 +40,17 @@ async function loadTeams() {
         console.error('Error loading teams:', err);
         loading.classList.add('hidden');
         error.classList.remove('hidden');
+    }
+}
+
+function updateTeamsHeadlineMetrics() {
+    if (teamsHeadlineCount) {
+        teamsHeadlineCount.textContent = allTeams.length;
+    }
+
+    if (teamsHeadlineCountryCount) {
+        const uniqueCountries = new Set(allTeams.map(team => team.Country).filter(Boolean));
+        teamsHeadlineCountryCount.textContent = uniqueCountries.size;
     }
 }
 
