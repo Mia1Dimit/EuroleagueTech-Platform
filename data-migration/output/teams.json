@@ -28,7 +28,7 @@
     "euroleague_status": "Founding member, 2-time champion (2003, 2010)",
     "last_updated": "March 6, 2026",
     "partnerships": [
-      "WIMU PRO (RealTrack Systems)"
+      "Hudl WIMU"
     ]
   },
   {
@@ -66,7 +66,7 @@
     "euroleague_status": "",
     "last_updated": "March 6, 2026",
     "partnerships": [
-      "Authena"
+      "Authena M3TA (Phygital Jersey Project)"
     ]
   },
   {
@@ -78,7 +78,8 @@
     "euroleague_status": "",
     "last_updated": "March 7, 2026",
     "partnerships": [
-      "Bauerfeind"
+      "Bauerfeind",
+      "YinzCam Mobile App & Digital Platform"
     ]
   },
   {
@@ -123,9 +124,7 @@
     "arena_capacity": 5000,
     "euroleague_status": "Euroleague participant",
     "last_updated": "March 6, 2026",
-    "partnerships": [
-      "STATSports APEX"
-    ]
+    "partnerships": []
   },
   {
     "team_id": "olimpia-milano",
@@ -137,7 +136,6 @@
     "last_updated": "March 6, 2026",
     "partnerships": [
       "Technogym",
-      "DJO",
       "Human Tecar",
       "Cerc Therapy",
       "Cetilar",
@@ -169,9 +167,11 @@
     "euroleague_status": "7-time EuroLeague Champions",
     "last_updated": "March 6, 2026",
     "partnerships": [
-      "KINEXON Sports",
       "ASB GlassFloor",
-      "Galanis Sports Data"
+      "Galanis Sports Data",
+      "KINEXON Sports",
+      "Statathlon",
+      "ThermoHuman"
     ]
   },
   {
@@ -208,7 +208,7 @@
     "last_updated": "March 6, 2026",
     "partnerships": [
       "Catapult Sports",
-      "Microsoft Azure/Office 365"
+      "Microsoft (Cloud & Productivity Partner)"
     ]
   },
   {
@@ -234,10 +234,9 @@
     "last_updated": "March 6, 2026",
     "partnerships": [
       "Technogym",
-      "DJO",
-      "Firstbeat Sports",
       "Spiideo Perform",
-      "Isokinetic"
+      "Isokinetic",
+      "Firstbeat Sports Premium"
     ]
   },
   {
