@@ -107,21 +107,26 @@ def list_vendors(category: str = None):
           For production scale, use Query with GSI1
     """
     try:
-        # Build filter expression (DynamoDB syntax, not Python!)
-        filter_expr = "EntityType = :type"
-        expr_values = {":type": "VENDOR"}
-        
-        # Optional: Filter by category
+        list_item = get_item(pk="LIST#VENDOR", sk="ALL")
+        items = list_item.get("Vendors", []) if list_item else []
+
+        # Fallback to Scan for backward compatibility while precomputed list is absent.
+        if not items:
+            filter_expr = "EntityType = :type"
+            expr_values = {":type": "VENDOR"}
+            if category:
+                filter_expr += " AND contains(Categories, :category)"
+                expr_values[":category"] = category
+            items = scan_items(
+                filter_expression=filter_expr,
+                expression_attribute_values=expr_values
+            )
+
         if category:
-            # Categories is a list attribute, use contains()
-            filter_expr += " AND contains(Categories, :category)"
-            expr_values[":category"] = category
-        
-        # Scan table with filter
-        items = scan_items(
-            filter_expression=filter_expr,
-            expression_attribute_values=expr_values
-        )
+            items = [
+                item for item in items
+                if category in (item.get("Categories") or [])
+            ]
         
         # Format response
         response_data = {

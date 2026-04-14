@@ -4,6 +4,7 @@ const API_BASE_URL = 'https://1o8pl970wc.execute-api.eu-west-1.amazonaws.com/dev
 // State
 let allTeams = [];
 let filteredTeams = [];
+const teamDetailsCache = new Map();
 
 // DOM Elements
 const searchInput = document.getElementById('search-input');
@@ -27,7 +28,7 @@ async function loadTeams() {
         
         const data = await response.json();
         // API returns {count: 20, teams: [...]} not direct array
-        allTeams = data.teams || data; // Handle both formats
+        allTeams = data.teams || data.Teams || data; // Handle both formats
         filteredTeams = [...allTeams];
 
         updateTeamsHeadlineMetrics();
@@ -173,9 +174,60 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Modal functions
-function showTeamModal(teamId) {
-    const team = allTeams.find(t => t.TeamID === teamId);
-    if (!team) return;
+async function fetchTeamDetails(teamId) {
+    if (teamDetailsCache.has(teamId)) {
+        return teamDetailsCache.get(teamId);
+    }
+
+    const response = await fetch(`${API_BASE_URL}/teams/${teamId}`);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch team details for ${teamId}`);
+    }
+
+    const team = await response.json();
+    teamDetailsCache.set(teamId, team);
+    return team;
+}
+
+function getPartnershipMetadata(team, partnerName) {
+    const metadata = team.PartnershipMetadata || {};
+    return metadata[partnerName] || null;
+}
+
+function createPartnershipCard(partnerName, metadata) {
+    const confidence = metadata?.AdoptionConfidence || metadata?.adoptionConfidence;
+    const startYear = metadata?.AdoptionStartYear || metadata?.adoptionStartYear;
+    const source = metadata?.ConfirmationSource || metadata?.confirmationSource;
+
+    return `
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.75rem;">
+            <div style="display: flex; align-items: center; margin-bottom: 0.35rem;">
+                <svg style="width: 1.25rem; height: 1.25rem; margin-right: 0.75rem; color: var(--accent-green); flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-secondary);">${partnerName}</span>
+            </div>
+            ${startYear || confidence || source ? `
+                <div style="margin-left: 2rem; font-size: 0.8rem; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 0.65rem;">
+                    ${startYear ? `<span>Start: <strong style="color: var(--text-secondary);">${startYear}</strong></span>` : ''}
+                    ${confidence ? `<span>Confidence: <strong style="color: var(--text-secondary);">${confidence}</strong></span>` : ''}
+                    ${source ? `<a href="${source}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="color: var(--orange-primary); text-decoration: none;">Source ↗</a>` : ''}
+                </div>
+            ` : ''}
+        </div>
+    `;
+}
+
+async function showTeamModal(teamId) {
+    const summaryTeam = allTeams.find(t => t.TeamID === teamId);
+    if (!summaryTeam) return;
+
+    let team = summaryTeam;
+    try {
+        team = await fetchTeamDetails(teamId);
+    } catch (err) {
+        console.error('Could not load detailed team data, falling back to summary:', err);
+    }
     
     const modal = document.getElementById('team-modal');
     const modalContent = document.getElementById('team-modal-content');
@@ -257,14 +309,7 @@ function showTeamModal(teamId) {
                         Technology Partnerships
                     </h3>
                     <div style="display: grid; gap: 0.75rem;">
-                        ${team.Partnerships.map(partner => `
-                            <div style="display: flex; align-items: center; background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.75rem;">
-                                <svg style="width: 1.25rem; height: 1.25rem; margin-right: 0.75rem; color: var(--accent-green); flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                                <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-secondary);">${partner}</span>
-                            </div>
-                        `).join('')}
+                        ${team.Partnerships.map(partner => createPartnershipCard(partner, getPartnershipMetadata(team, partner))).join('')}
                     </div>
                 </div>
             ` : `

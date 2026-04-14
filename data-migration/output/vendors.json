@@ -190,13 +190,16 @@
     "products": []
   },
   {
-    "vendor_id": "hudl-sportscode",
-    "name": "Hudl / Sportscode",
+    "vendor_id": "hudl",
+    "name": "Hudl",
     "headquarters": "Lincoln, Nebraska, USA",
     "founded": "2006",
     "market_position": "Video Analysis Leader",
     "categories": [
-      "Video Analysis"
+      "Data Analytics",
+      "Video Analysis",
+      "Scouting & Recruitment",
+      "Performance Tracking"
     ],
     "products": [
       "Hudl Focus Indoor",
@@ -436,9 +439,9 @@
   },
   {
     "vendor_id": "synergy-sports",
-    "name": "Synergy Coaching & Scouting (Sportradar)",
-    "headquarters": "San Antonio, Texas, USA",
-    "founded": "2005",
+    "name": "Sportradar",
+    "headquarters": "Switzerland",
+    "founded": "2001",
     "market_position": "Industry Standard for Scouting",
     "categories": [
       "Scouting & Recruitment",

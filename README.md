@@ -18,7 +18,7 @@ A production-ready platform combining:
 | **Comparison Tool** | Interactive side-by-side vendor comparisons (e.g., Catapult vs KINEXON) |
 | **Research Foundation** | Structured data model for Euroleague sports analytics |
 
-**Live Demo**: [Visit the platform](https://your-cloudfront-url.cloudfront.net) *(Coming soon)*
+**Live Demo**: [Visit the platform](https://d3n25hf9bvh9rw.cloudfront.net)
 
 ---
 
@@ -99,7 +99,7 @@ A production-ready platform combining:
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/YOUR_USERNAME/EuroleagueTech-Cloud-Platform.git
+git clone https://github.com/Mia1Dimit/EuroleagueTech-Platform.git
 cd EuroleagueTech-Cloud-Platform
 
 # 2. Configure AWS credentials
@@ -111,8 +111,7 @@ aws configure
 # 3. Set up infrastructure
 cd infrastructure
 cp terraform.tfvars.example terraform.tfvars
-# ✔ Edit terraform.tfvars with your S3 bucket names (replace TIMESTAMP)
-#   Example: spotech-dev-frontend-20260401 (add current date)
+# ✔ Edit terraform.tfvars with your S3 bucket names 
 
 terraform init -backend-config=backend-config-dev.tfvars
 terraform plan -var-file=terraform.tfvars

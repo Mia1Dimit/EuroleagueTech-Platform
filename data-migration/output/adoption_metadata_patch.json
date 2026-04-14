@@ -1,0 +1,191 @@
+{
+  "generated_on": "2026-04-02",
+  "purpose": "Team-product adoption metadata patch for requested vendors/products",
+  "notes": [
+    "Current teams.json schema only stores a simple partnerships array.",
+    "This sidecar patch adds adoption fields without changing existing schema.",
+    "Action=add_partnership_and_annotate means the product is not currently listed in that team partnerships array and should be added first."
+  ],
+  "updates": [
+    {
+      "team_id": "panathinaikos-athens",
+      "product": "ThermoHuman",
+      "vendor_id": "thermohuman",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2022,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://thermohuman.com/2022/06/02/how-does-panathinaikos-bc-use-thermohuman-for-injury-prevention",
+      "evidenceNote": "ThermoHuman successful case explicitly references Panathinaikos BC usage."
+    },
+    {
+      "team_id": "valencia-basket",
+      "product": "KangaTech KT360",
+      "vendor_id": "kangatech",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2025,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://articles.kangatech.com/valenciabasket",
+      "evidenceNote": "Published Jul 15, 2025; article states Valencia integrated KT360 and is first European basketball team to adopt the system."
+    },
+    {
+      "team_id": "barcelona-bc",
+      "product": "Hudl WIMU",
+      "vendor_id": "hudl",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2020,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://www.fcbarcelona.com/en/news/1746453/wimu-the-device-that-tracks-athlete-data",
+      "evidenceNote": "Page metadata includes datePublished 2020-08-01 and article confirms WIMU collaboration in Barcelona multisport context including basketball."
+    },
+    {
+      "team_id": "bayern-munich-basketball",
+      "product": "KINEXON PERFORM",
+      "vendor_id": "kinexon",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2018,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://kinexon-sports.com/pr/new-official-partner-until-2021-modern-performance-analysis-at-fc-bayern-basketball-thanks-to-kinexon",
+      "evidenceNote": "Original partnership announcement; later expansion announced in 2024."
+    },
+    {
+      "team_id": "panathinaikos-athens",
+      "product": "KINEXON Sports",
+      "vendor_id": "kinexon",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2024,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://kinexon-sports.com/pr/kinexon-sports-announces-basketball-analytics-partnership-with-euroleague-team-panathinaikos-bc-aktor",
+      "evidenceNote": "Official KINEXON announcement dated May 23, 2024."
+    },
+    {
+      "team_id": "zalgiris-kaunas",
+      "product": "KINEXON PERFORM LPS",
+      "vendor_id": "kinexon",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2024,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://kinexon-sports.com/pr/zalgiris-kaunas-tech-offensive-lithuanian-record-champions-enter-the-season-with-three-analytics-products",
+      "evidenceNote": "Official KINEXON announcement dated Aug 29, 2024 for full suite rollout."
+    },
+    {
+      "team_id": "zalgiris-kaunas",
+      "product": "KINEXON PERFORM IMU",
+      "vendor_id": "kinexon",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2024,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://kinexon-sports.com/pr/zalgiris-kaunas-tech-offensive-lithuanian-record-champions-enter-the-season-with-three-analytics-products",
+      "evidenceNote": "Same announcement confirms IMU plus LPS and Vision."
+    },
+    {
+      "team_id": "zalgiris-kaunas",
+      "product": "KINEXON COMPETE Vision",
+      "vendor_id": "kinexon",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2024,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://kinexon-sports.com/pr/zalgiris-kaunas-tech-offensive-lithuanian-record-champions-enter-the-season-with-three-analytics-products",
+      "evidenceNote": "Same announcement confirms Vision adoption."
+    },
+    {
+      "team_id": "virtus-bologna",
+      "product": "Firstbeat Sports Premium",
+      "vendor_id": "firstbeat-sports",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2021,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://www.firstbeat.com/en/news/virtus-bologna/",
+      "evidenceNote": "Firstbeat article states a 3-year partnership to kick off 2021-22 season; article published Feb 9, 2022."
+    },
+    {
+      "team_id": "olympiakos-piraeus",
+      "product": "Evo4HP ArtemYs",
+      "vendor_id": "evo4hp",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2026,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "internal-research-corpus",
+      "evidenceNote": "Since September 2022"
+    },
+    {
+      "team_id": "fenerbahce-beko-istanbul",
+      "product": "ArtemYs (EVO4HP)",
+      "vendor_id": "evo4hp",
+      "action": "add_partnership_and_annotate",
+      "adoptionStartYear": 2022,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://www.evo4hp.com/blog/evo4hp-fenerbahce-partnership/",
+      "evidenceNote": "EVO4HP page title and body explicitly announce Fenerbahce Beko strategic partnership dated Dec 13, 2022."
+    },
+    {
+      "team_id": "virtus-bologna",
+      "product": "Technogym",
+      "vendor_id": "technogym",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2025,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://www.technogym.com/it-IT/stories/virtus-bologna/",
+      "evidenceNote": "Technogym story dated 20 Oct 2025 states Virtus Bologna confirms trust in Technogym and continues collaboration for the new season with a fully renewed Casa Virtus Alfasigma gym."
+    },
+    {
+      "team_id": "baskonia-vitoria-gasteiz",
+      "product": "WSC Sports",
+      "vendor_id": "wsc-sports",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2020,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://wsc-sports.com/blog/customer-spotlight/how-baskonia-shoots-to-be-the-goat-with-wsc-sports-technology/",
+      "evidenceNote": "WSC customer spotlight (Nov 27, 2024) states WSC Sports first teamed up with Baskonia in June 2020 for automated game clip editing and distribution."
+    },
+    {
+      "team_id": "crvena-zvezda-belgrade",
+      "product": "Authena M3TA (Phygital Jersey Project)",
+      "vendor_id": "authena",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2022,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://authena.io/authena-m3ta-for-red-star-basketball-phygital-jerseys/",
+      "evidenceNote": "Authena case study (23 Jan 2023) says Red Star, Adidas, and Authena launched the phygital jersey campaign in Oct 2022 using Authena M3TA technology."
+    },
+    {
+      "team_id": "hapoel-tel-aviv",
+      "product": "Galanis Sports Data",
+      "vendor_id": "galanis-sports-data",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2025,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://www.galanissportsdata.com/applying-ai-in-business-processes-how-designs-ai-is-leading-the-way/",
+      "evidenceNote": "Galanis post dated Aug 25, 2025 announces new collaboration with Hapoel Tel Aviv for 2025-26 game statistics coverage and Instant Replay System operations."
+    },
+    {
+      "team_id": "paris-basketball",
+      "product": "Globant FanExp",
+      "vendor_id": "globant-fanexp",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2024,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://parisbasketball.com/2024/11/paris-basketball-globant-partenaires-dexcellence/",
+      "evidenceNote": "Official Paris Basketball announcement published Nov 19, 2024 confirms strategic partnership with Globant as Official Supporter to drive digital transformation and fan engagement."
+    },
+    {
+      "team_id": "dubai-basketball",
+      "product": "YinzCam Mobile App & Digital Platform",
+      "vendor_id": "yinzcam",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2025,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://www.prnewswire.co.uk/news-releases/yinzcam-expands-global-reach-with-launch-of-first-uae-mobile-app-for-dubai-basketball-302586876.html",
+      "evidenceNote": "PR Newswire release dated Oct 16, 2025 announces partnership launch of Dubai Basketball app and unified digital platform rollout (app, website, CDP) by YinzCam."
+    },
+    {
+      "team_id": "real-madrid",
+      "product": "Catapult Sports",
+      "vendor_id": "catapult-sports",
+      "action": "annotate_existing_partnership",
+      "adoptionStartYear": 2020,
+      "adoptionConfidence": "Confirmed",
+      "confirmationSource": "https://www.youtube.com/watch?v=_eWBsEu0n4I",
+      "evidenceNote": "Catapult Sports-hosted webinar title references Real Madrid Basketball in 2020; supports relationship but is weaker than formal partnership PR."
+    }
+  ]
+}

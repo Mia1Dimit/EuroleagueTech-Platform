@@ -105,20 +105,23 @@ def list_teams(country: str = None):
         For 1000+ teams, use Query with GSI1 (COUNTRY# partition key)
     """
     try:
-        # Base filter: Only TEAM entities
-        filter_expr = "EntityType = :type"
-        expr_values = {":type": "TEAM"}
-        
-        # Optional: Filter by country
+        list_item = get_item(pk="LIST#TEAM", sk="ALL")
+        items = list_item.get("Teams", []) if list_item else []
+
+        # Fallback to Scan for backward compatibility while precomputed list is absent.
+        if not items:
+            filter_expr = "EntityType = :type"
+            expr_values = {":type": "TEAM"}
+            if country:
+                filter_expr += " AND Country = :country"
+                expr_values[":country"] = country
+            items = scan_items(
+                filter_expression=filter_expr,
+                expression_attribute_values=expr_values
+            )
+
         if country:
-            filter_expr += " AND Country = :country"
-            expr_values[":country"] = country
-        
-        # Scan table with filter
-        items = scan_items(
-            filter_expression=filter_expr,
-            expression_attribute_values=expr_values
-        )
+            items = [item for item in items if item.get("Country") == country]
         
         # Format response
         response_data = {
