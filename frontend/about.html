@@ -178,7 +178,7 @@
     <section style="padding: 5rem 0; background: var(--bg-secondary); border-top: 1px solid var(--border-color);">
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
             <h2 style="font-family: 'Barlow Condensed', sans-serif; font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">IMPLEMENTATION PLAN & ROADMAP</h2>
-            <p style="color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-bottom: 2.5rem; letter-spacing: 0.04em; text-transform: uppercase;">Last updated: March 30, 2026</p>
+            <p style="color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-bottom: 2.5rem; letter-spacing: 0.04em; text-transform: uppercase;">Last updated: April 14, 2026</p>
             
             <div style="display: grid; gap: 2rem;">
                 <!-- Phase 1: Completed -->
@@ -237,54 +237,89 @@
                     </ul>
                 </div>
 
-                <!-- Phase 3: Planned -->
-                <div class="card-broadcast" style="border-left: 3px solid var(--text-muted); animation: slideInLeft 0.6s ease-out backwards; animation-delay: 0.3s;">
+                <!-- Phase 3: CI/CD -->
+                <div class="card-broadcast" style="border-left: 3px solid var(--accent-blue); animation: slideInLeft 0.6s ease-out backwards; animation-delay: 0.3s;">
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-                        <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Phase 3: Enhanced Features</h3>
-                        <span style="background: var(--text-muted); color: var(--bg-primary); padding: 0.35rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;">PLANNED Q2 2026</span>
+                        <div>
+                            <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Phase 3: CI/CD Pipeline</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.35rem;">So changes ship safely without any manual steps</p>
+                        </div>
+                        <span style="background: var(--accent-blue); color: var(--bg-primary); padding: 0.35rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;">IN PROGRESS</span>
                     </div>
                     <ul style="list-style: none; padding: 0; margin: 0; color: var(--text-secondary);">
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
-                            Custom domain (euroleague-tech-hub.com)
+                            <span style="position: absolute; left: 0; color: var(--accent-blue);">○</span>
+                            GitHub Actions: push to <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">main</span> auto-deploys frontend (S3 sync + CloudFront invalidation)
                         </li>
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
-                            Advanced comparison tools (team vs team / vendor vs vendor)
+                            <span style="position: absolute; left: 0; color: var(--accent-blue);">○</span>
+                            Backend Lambda packaged and deployed automatically on code change
                         </li>
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
-                            Partnership timeline visualization
+                            <span style="position: absolute; left: 0; color: var(--accent-blue);">○</span>
+                            Pull request triggers <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">terraform plan</span> and posts the diff as a PR comment
                         </li>
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
-                            Export functionality (PDF reports, CSV data)
+                            <span style="position: absolute; left: 0; color: var(--accent-blue);">○</span>
+                            GitHub OIDC → IAM role (no long-lived AWS credentials stored anywhere)
                         </li>
                     </ul>
                 </div>
 
-                <!-- Phase 4: Future Vision -->
+                <!-- Phase 4: Observability -->
                 <div class="card-broadcast" style="border-left: 3px solid var(--text-muted); animation: slideInLeft 0.6s ease-out backwards; animation-delay: 0.4s;">
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-                        <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Phase 4: Intelligence Layer</h3>
-                        <span style="background: var(--text-muted); color: var(--bg-primary); padding: 0.35rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;">FUTURE</span>
+                        <div>
+                            <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Phase 4: Observability Stack</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.35rem;">Know immediately when something breaks before a user does</p>
+                        </div>
+                        <span style="background: var(--text-muted); color: var(--bg-primary); padding: 0.35rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;">PLANNED Q3 2026</span>
                     </div>
                     <ul style="list-style: none; padding: 0; margin: 0; color: var(--text-secondary);">
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
                             <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
-                            AI-powered market insights and trend analysis
+                            Lambda Powertools: structured JSON logging + X-Ray tracing on every request
                         </li>
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
                             <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
-                            Automated data updates via web scraping
+                            CloudWatch dashboard: API latency P50/P95/P99, Lambda errors, DynamoDB capacity
                         </li>
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
                             <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
-                            User accounts and custom watchlists
+                            SNS alarms → email on Lambda error spike, API 5xx rate, or billing threshold
                         </li>
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
                             <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
-                            API access for third-party integrations
+                            X-Ray service map: end-to-end trace from CloudFront → API GW → Lambda → DynamoDB
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Phase 5: WAF + Rate Limiting -->
+                <div class="card-broadcast" style="border-left: 3px solid var(--text-muted); animation: slideInLeft 0.6s ease-out backwards; animation-delay: 0.5s;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Phase 5: API Rate Limiting + WAF</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.35rem;">Protect availability and cost from abuse and crawlers</p>
+                        </div>
+                        <span style="background: var(--text-muted); color: var(--bg-primary); padding: 0.35rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;">PLANNED Q3 2026</span>
+                    </div>
+                    <ul style="list-style: none; padding: 0; margin: 0; color: var(--text-secondary);">
+                        <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
+                            API Gateway usage plan: 100 req/s sustained, 200 burst — returns HTTP 429 on breach
+                        </li>
+                        <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
+                            CloudFront WAF Web ACL with AWS managed common rule set
+                        </li>
+                        <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
+                            Rate-based rule: auto-block IPs exceeding 500 requests per 5-minute window
+                        </li>
+                        <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
+                            WAF Terraform module in <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">us-east-1</span> (required for CloudFront association)
                         </li>
                     </ul>
                 </div>
