@@ -7,7 +7,7 @@ Python Lambda handlers for the EuroleagueTech Cloud Platform.
 ## 🏗️ Architecture
 
 ```
-AWS Lambda (Python 3.9)
+AWS Lambda (Python 3.12)
 ├── vendors_api.py
 │   └── lambda_handler(event, context)
 │       ├── GET /vendors → Returns all 36 vendors
@@ -119,37 +119,29 @@ GET /teams/REAL_MADRID
 Handles HTTP response formatting and CORS headers.
 
 ```python
-from utils.response import format_response
+from utils.response import success, error
 
 # Successful response
-response = format_response(
-    status_code=200,
-    body=data,
-    is_json=True
-)
+response = success(data, status_code=200)
 # Returns:
 # {
 #   "statusCode": 200,
 #   "headers": {
-#     "Access-Control-Allow-Origin": "*",
-#     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+#     "Access-Control-Allow-Origin": "https://d3n25hf9bvh9rw.cloudfront.net",
+#     "Access-Control-Allow-Methods": "GET,OPTIONS",
 #     "Content-Type": "application/json"
 #   },
 #   "body": "[JSON string]"
 # }
 
 # Error response
-response = format_response(
-    status_code=400,
-    body={"error": "Bad request"},
-    is_json=True
-)
+response = error("Bad request", status_code=400)
 ```
 
-**CORS Notes** (⚠️ Current State - Phase 3 to harden):
-- Currently uses wildcard CORS: `Access-Control-Allow-Origin: *`
-- Production should restrict to specific domains
-- Security findings documented in [code-reviews/](../code-reviews/)
+**CORS Notes** (current implementation):
+- CORS origin is scoped via `CORS_ORIGIN` environment variable
+- Default dev origin: `https://d3n25hf9bvh9rw.cloudfront.net`
+- Allowed methods: `GET,OPTIONS`
 
 ### `utils/dynamodb.py`
 
@@ -248,7 +240,7 @@ cd backend/src
 zip -r ../lambda-package.zip handlers/ utils/ *.py
 
 # Upload to AWS (Terraform handles this)
-terraform apply -var-file=dev.tfvars
+terraform apply -var-file=../environments/dev.tfvars
 ```
 
 ### Via Terraform
@@ -295,9 +287,10 @@ vendors = query_by_gsi(table_name, gsi_name="GSI1", ...)
 - ✅ No hardcoded credentials (uses IAM Lambda execution role)
 - ✅ No SQL injection (DynamoDB is NoSQL)
 - ✅ No business logic secrets
+- ✅ XSS hardening complete in frontend consumers
+- ✅ CORS origin scoped (no wildcard `*` in backend responses)
 
 ### Areas for Phase 3 Hardening
-- ⚠️ XSS vulnerabilities in frontend (for data returned to browser)
 - ⚠️ NO API authentication (should add API keys or Cognito)
 - ⚠️ NO rate limiting
 - 📋 See [SECURITY.md](../SECURITY.md) for full findings
@@ -335,5 +328,5 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for full guidelines.
 
 ---
 
-**Last Updated**: March 31, 2026  
-**Status**: Production-Ready (Phase 2) → Phase 3 enhancements incoming
+**Last Updated**: August 3, 2026  
+**Status**: Production-Ready (v0.3.0 baseline)

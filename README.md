@@ -101,7 +101,7 @@ A production-ready platform combining:
 ```bash
 # 1. Clone repository
 git clone https://github.com/Mia1Dimit/EuroleagueTech-Platform.git
-cd EuroleagueTech-Cloud-Platform
+cd EuroleagueTech-Platform
 
 # 2. Configure AWS credentials
 aws configure
@@ -138,7 +138,7 @@ curl https://your-api-endpoint.execute-api.eu-west-1.amazonaws.com/dev/vendors
 ## 📁 Project Structure
 
 ```
-EuroleagueTech-Cloud-Platform/
+EuroleagueTech-Platform/
 ├── README.md                          # This file
 ├── LICENSE                            # MIT License
 ├── CONTRIBUTING.md                    # How to contribute
@@ -381,8 +381,8 @@ This project is licensed under the **MIT License** - see [LICENSE](LICENSE) for 
 
 - 📖 **Getting Started**: Check [Quick Start](#-quick-start) section
 - ⚙️ **Deployment Issues**: See [infrastructure/README.md](infrastructure/README.md)
-- 🐛 **Found a Bug**: [Open an issue](https://github.com/YOUR_USERNAME/EuroleagueTech-Cloud-Platform/issues)
-- 💡 **Have an Idea**: [Start a discussion](https://github.com/YOUR_USERNAME/EuroleagueTech-Cloud-Platform/discussions)
+- 🐛 **Found a Bug**: [Open an issue](https://github.com/Mia1Dimit/EuroleagueTech-Platform/issues)
+- 💡 **Have an Idea**: [Start a discussion](https://github.com/Mia1Dimit/EuroleagueTech-Platform/discussions)
 - 🔒 **Security Concern**: See [SECURITY.md](SECURITY.md)
 
 ---
