@@ -1,3 +1,4 @@
+```yaml
 name: EuroleagueTech Platform — Deploy Frontend
 
 on:
@@ -10,10 +11,12 @@ on:
 
 env:
   AWS_REGION: "eu-west-1"
+  AWS_DEFAULT_REGION: "eu-west-1"
   S3_BUCKET: "spotech-dev-frontend-20260320"
+  CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_DEFAULT_REGION: "eu-west-1"
 
 concurrency:
   group: deploy-frontend-${{ github.ref }}
@@ -23,6 +26,7 @@ jobs:
   deploy:
     name: Sync Frontend to S3
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
 
@@ -30,17 +34,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Sync to S3
+      - name: Verify AWS credentials
         run: |
-          aws s3 sync frontend/ s3://${{ env.S3_BUCKET }}/ \
+          aws sts get-caller-identity
+
+      - name: Sync Frontend to S3
+        run: |
+          echo "Deploying frontend to s3://${S3_BUCKET}/"
+
+          aws s3 sync frontend/ "s3://${S3_BUCKET}/" \
             --delete \
             --cache-control "public, max-age=300"
 
+      - name: Verify CloudFront distribution ID
+        run: |
+          if [ -z "$CLOUDFRONT_DISTRIBUTION_ID" ]; then
+            echo "ERROR: CLOUDFRONT_DISTRIBUTION_ID is not configured."
+            echo "Add it under:"
+            echo "GitHub repository → Settings → Secrets and variables → Actions"
+            exit 1
+          fi
+
+          echo "CloudFront distribution ID is configured."
+
       - name: Invalidate CloudFront cache
         run: |
-          DISTRIBUTION_ID=$(aws cloudfront list-distributions \
-            --query "DistributionList.Items[?Origins.Items[0].DomainName=='${{ env.S3_BUCKET }}.s3.amazonaws.com'].Id" \
-            --output text)
+          echo "Invalidating CloudFront cache..."
+
           aws cloudfront create-invalidation \
-            --distribution-id "$DISTRIBUTION_ID" \
+            --distribution-id "$CLOUDFRONT_DISTRIBUTION_ID" \
             --paths "/*"
+
+          echo "CloudFront invalidation requested successfully."
+```
