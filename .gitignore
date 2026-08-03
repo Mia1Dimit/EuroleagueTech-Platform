@@ -7,7 +7,6 @@ tfplan
 tfplan.out
 *.tfstate
 *.tfstate.*
-*.tfvars
 !terraform.tfvars.example
 crash.log
 override.tf
