@@ -1,5 +1,5 @@
 resource "aws_s3_bucket_cors_configuration" "s3_bucket_cors_configuration" {
-  bucket = var.bucket_name
+  bucket                = var.bucket_name
   expected_bucket_owner = var.expected_bucket_owner
 
   dynamic "cors_rule" {

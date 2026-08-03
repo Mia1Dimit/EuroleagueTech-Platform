@@ -8,8 +8,12 @@ Why this exists:
 """
 
 import json
+import os
 from decimal import Decimal
 from typing import Any, Dict
+
+# Scope CORS to the CloudFront origin; override via env var if the distribution changes
+_CORS_ORIGIN = os.environ.get('CORS_ORIGIN', 'https://d3n25hf9bvh9rw.cloudfront.net')
 
 
 class DecimalEncoder(json.JSONEncoder):
@@ -51,32 +55,22 @@ def success(data: Any, status_code: int = 200) -> Dict:
         'statusCode': status_code,
         'headers': {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',  # CORS: allow all origins (for now)
+            'Access-Control-Allow-Origin': _CORS_ORIGIN,
             'Access-Control-Allow-Headers': 'Content-Type,Authorization',
-            'Access-Control-Allow-Methods': 'GET,POST,OPTIONS'
+            'Access-Control-Allow-Methods': 'GET,OPTIONS'
         },
-        'body': json.dumps(data, cls=DecimalEncoder)  # Use custom encoder for Decimal
+        'body': json.dumps(data, cls=DecimalEncoder)
     }
 
 
 def error(message: str, status_code: int = 500) -> Dict:
-    """
-    Format error response.
-    
-    Args:
-        message: Human-readable error message
-        status_code: HTTP error code (400, 404, 500, etc.)
-    
-    Returns:
-        Dict with error format
-    """
     return {
         'statusCode': status_code,
         'headers': {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Origin': _CORS_ORIGIN,
             'Access-Control-Allow-Headers': 'Content-Type,Authorization',
-            'Access-Control-Allow-Methods': 'GET,POST,OPTIONS'
+            'Access-Control-Allow-Methods': 'GET,OPTIONS'
         },
         'body': json.dumps({
             'error': message,

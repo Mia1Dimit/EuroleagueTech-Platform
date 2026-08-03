@@ -55,10 +55,11 @@ A production-ready platform combining:
 **Key Services**:
 - **Frontend**: Static S3 website + CloudFront global CDN
 - **API**: API Gateway HTTP API (cheap, modern)
-- **Compute**: Lambda Python 3.9 (pay-per-invocation)
+- **Compute**: Lambda Python 3.12 (pay-per-invocation)
 - **Data**: DynamoDB single-table design (pay-per-request)
-- **Logging**: CloudWatch (1-day retention in dev)
-- **IaC**: Terraform with 15 reusable modules
+- **Logging**: CloudWatch Logs (14-day retention) + X-Ray distributed tracing
+- **Observability**: SNS alarms, CloudWatch dashboard, Lambda Powertools
+- **IaC**: Terraform with 18 reusable modules
 
 ---
 
@@ -165,18 +166,21 @@ EuroleagueTech-Cloud-Platform/
 │           ├── response.py           # Response formatting + CORS
 │           └── dynamodb.py           # Query helpers
 │
+├── modules/                           # 18 reusable Terraform modules
+│   ├── dynamodb/
+│   ├── lambda-function/
+│   ├── api-gatewayv2-api/
+│   ├── s3-bucket/
+│   ├── cloudfront/
+│   ├── cloudwatch-alarm/
+│   ├── cloudwatch-dashboard/
+│   ├── sns-topic/
+│   └── [10 more modules...]
+│
 ├── infrastructure/                    # Terraform IaC
 │   ├── README.md                     # Deployment guide
-│   ├── *.tf                          # 14 main Terraform files
-│   ├── terraform.tfvars.example      # Configuration template (SAFE)
-│   ├── modules/                      # 15 reusable Terraform modules
-│   │   ├── dynamodb/
-│   │   ├── lambda-function/
-│   │   ├── api-gatewayv2-api/
-│   │   ├── s3-bucket/
-│   │   ├── cloudfront/
-│   │   └── [12 more modules...]
-│   └── data/                         # IAM policies + null configs
+│   ├── *.tf                          # Terraform config files
+│   └── data/                         # IAM policy templates (templatefile)
 │
 ├── data-migration/                    # Migration utilities
 │   ├── upload_to_dynamodb.py         # Batch upload script
@@ -199,17 +203,20 @@ EuroleagueTech-Cloud-Platform/
 ## 🔐 Security & Privacy
 
 ### Current State
-- ✅ No hardcoded secrets (uses AWS IAM roles exclusively)
+- ✅ No hardcoded secrets (static IAM credentials via GitHub Secrets)
 - ✅ Encryption at rest (DynamoDB, S3)
 - ✅ Encryption in transit (TLS/HTTPS via CloudFront)
-- ⚠️ **Public API** (no authentication - Phase 3 plan)
-- ⚠️ **XSS findings** on frontend (see code-reviews/)
+- ✅ XSS remediated: escapeHtml + safeHref on all frontend API output (v0.3.0)
+- ✅ CORS scoped to CloudFront origin (no wildcard `*`)
+- ✅ Raw event logging removed from Lambda handlers
+- ✅ IAM policies ARN-scoped to account + region via templatefile()
+- ⚠️ **Public API** (no authentication — planned)
 
 ### Security Audit
 See [code-reviews/](code-reviews/) for principal-level audit findings:
 - 11 findings catalogued (severity: Critical → Low)
-- P0/P1 items planned for Phase 3 hardening
-- Remediation guidance included
+- P0/P1 XSS findings remediated in v0.3.0
+- Remaining: API authentication, WAF
 
 ### Responsible Disclosure
 🔒 Found a vulnerability? See [SECURITY.md](SECURITY.md) for reporting.
@@ -306,10 +313,12 @@ This project demonstrates:
 - ✅ AWS Well-Architected Framework alignment
 
 ### DevOps & Platform Engineering
-- ✅ Reusable Terraform modules (15+)
+- ✅ Reusable Terraform modules (18+, private registry pattern)
 - ✅ Environment config management (dev.tfvars pattern)
-- ✅ Least-privilege IAM (security best practices)
-- ✅ CloudWatch observability setup
+- ✅ Least-privilege IAM, ARN-scoped policies via templatefile()
+- ✅ CloudWatch alarms + dashboard + SNS alerts
+- ✅ Lambda Powertools: structured JSON logging + X-Ray tracing
+- ✅ CI/CD: GitHub Actions workflows (Terraform plan/apply, Lambda deploy, S3 sync)
 
 ### Software Engineering
 - ✅ API design patterns (REST endpoints)
@@ -321,30 +330,31 @@ This project demonstrates:
 
 ## 🗺️ Roadmap
 
-### Phase 2 ✅ (Complete)
-- ✅ Infrastructure deployment (Terraform)
-- ✅ Backend Lambda endpoints (Python)
-- ✅ DynamoDB single-table (20 teams + 36 vendors)
-- ✅ Frontend static pages (4 HTML pages)
+### v0.1–v0.2 ✅ (Complete)
+- ✅ Infrastructure deployment (Terraform, 18 modules)
+- ✅ Backend Lambda endpoints (Python 3.12)
+- ✅ DynamoDB single-table (20 teams + 36 vendors, 5 GSIs)
+- ✅ Frontend static pages (4 HTML pages, broadcast design system)
 - ✅ API integration end-to-end
 - ✅ Security code review (11 findings catalogued)
 
-### Phase 3 🚧 (In Progress)
-- 📋 Vendor comparison feature (multi-select UI)
+### v0.3.0 ✅ (PE Hardening — Complete)
+- ✅ XSS remediated on all three frontend JS files
+- ✅ CORS scoped to CloudFront origin (env var, no wildcard)
+- ✅ Raw event logging removed from Lambda handlers
+- ✅ Lambda Powertools: structured JSON logging + X-Ray tracing
+- ✅ IAM policies ARN-scoped via templatefile() (no wildcards)
+- ✅ CloudWatch alarms: API 5XX, Lambda errors per function
+- ✅ SNS alert topic for alarm fan-out
+- ✅ CloudWatch operational dashboard (6 widgets)
+- ✅ Log retention raised to 14 days
+- ✅ GitHub Actions: Terraform plan/apply, Lambda deploy, S3 sync
+
+### Next
 - 📋 API authentication (Cognito or API keys)
-- 📋 Security hardening (XSS, rate limiting)
-- 📋 CI/CD pipeline (GitHub Actions)
-
-### Phase 4 (Planned)
+- 📋 CloudFront WAF Web ACL + rate-based rules
+- 📋 Vendor comparison feature (multi-select UI)
 - 📋 React migration (from static HTML)
-- 📋 Analytics dashboard (Athena + QuickSight)
-- 📋 Optional: ECS Fargate backend for scale
-
-### Phase 5 (Future)
-- 📋 Community features
-- 📋 Advanced filtering/sorting
-- 📋 Export/reporting capabilities
-- 📋 Mobile app support
 
 ---
 

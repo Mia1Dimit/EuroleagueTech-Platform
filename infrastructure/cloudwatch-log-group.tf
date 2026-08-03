@@ -5,8 +5,8 @@ module "cloudwatch_log_group" {
   name              = each.value["name"]
   retention_in_days = each.value["retention_in_days"]
 
-  specifictags     = each.value["specifictags"]
-  applicationname  = var.applicationname
-  applicationid    = var.applicationid
-  environment      = var.environment
+  specifictags    = each.value["specifictags"]
+  applicationname = var.applicationname
+  applicationid   = var.applicationid
+  environment     = var.environment
 }

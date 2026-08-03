@@ -86,7 +86,7 @@ variable "response_parameters" {
     mappings    = map(string)
     status_code = string
   }))
-  default     = []
+  default = []
 }
 
 variable "template_selection_expression" {
@@ -106,5 +106,5 @@ variable "tls_config" {
   type = object({
     server_name_to_verify = optional(string)
   })
-  default     = null
+  default = null
 }

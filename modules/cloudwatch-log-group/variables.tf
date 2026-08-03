@@ -37,10 +37,10 @@ variable "applicationname" {
 
 locals {
   common_tags = {
-    Application_ID    = var.applicationid
-    Application_Name  = var.applicationname
-    Environment       = var.environment
-    Name              = var.name
+    Application_ID   = var.applicationid
+    Application_Name = var.applicationname
+    Environment      = var.environment
+    Name             = var.name
   }
   merged_tags = merge(local.common_tags, var.specifictags)
 }

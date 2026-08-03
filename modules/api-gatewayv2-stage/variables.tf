@@ -1,8 +1,8 @@
 locals {
   common_tags = {
-    Application_ID    = var.applicationid
-    Application_Name  = var.applicationname
-    Environment       = var.environment
+    Application_ID   = var.applicationid
+    Application_Name = var.applicationname
+    Environment      = var.environment
   }
   merged_tags = merge(local.common_tags, var.specifictags)
 }
@@ -77,22 +77,22 @@ variable "route_settings" {
 }
 
 variable "specifictags" {
-    type = map(string)
-    description = "Specific tags for the resource"
+  type        = map(string)
+  description = "Specific tags for the resource"
 }
 
 variable "environment" {
-  type = string
+  type        = string
   description = "Environment Tag"
 }
 
 variable "applicationid" {
-  type = string
+  type        = string
   description = "Application_ID Tag"
 }
 
 variable "applicationname" {
-  type = string
+  type        = string
   description = "Application_Name Tag"
 }
 

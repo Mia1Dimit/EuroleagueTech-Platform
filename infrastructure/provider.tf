@@ -22,8 +22,7 @@ terraform {
 # AWS Provider Configuration
 # ============================================================================
 provider "aws" {
-  region  = var.aws_region
-  profile = "default"
+  region = var.aws_region
 
   # Default tags applied to all resources
   default_tags {

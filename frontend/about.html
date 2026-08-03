@@ -119,7 +119,7 @@
                 <div style="background: rgba(255, 102, 0, 0.1); border-left: 3px solid var(--orange-primary); padding: 1.5rem;">
                     <p style="color: var(--text-secondary);">
                         <strong style="color: var(--text-primary);">Data Standard:</strong> All partnerships and technology implementations listed are <strong style="color: var(--orange-primary);">publicly verified</strong>. 
-                        We do not include unconfirmed or speculative information. Last comprehensive update: <span style="font-family: 'JetBrains Mono', monospace; color: var(--orange-primary);">March 2026</span>.
+                        We do not include unconfirmed or speculative information. Last comprehensive update: <span style="font-family: 'JetBrains Mono', monospace; color: var(--orange-primary);">August 2026</span>.
                     </p>
                 </div>
             </div>
@@ -144,20 +144,22 @@
                 <div class="card-broadcast">
                     <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.05em;">Backend</h3>
                     <ul style="list-style: none; padding: 0; margin: 0; color: var(--text-secondary); font-size: 0.9rem;">
-                        <li style="margin-bottom: 0.5rem;">• AWS Lambda (Python 3.9)</li>
+                        <li style="margin-bottom: 0.5rem;">• AWS Lambda (Python 3.12)</li>
+                        <li style="margin-bottom: 0.5rem;">• Lambda Powertools (logging + tracing)</li>
                         <li style="margin-bottom: 0.5rem;">• API Gateway HTTP API</li>
                         <li style="margin-bottom: 0.5rem;">• DynamoDB (serverless database)</li>
-                        <li style="margin-bottom: 0.5rem;">• CloudWatch Logs</li>
+                        <li style="margin-bottom: 0.5rem;">• X-Ray distributed tracing</li>
                     </ul>
                 </div>
                 
                 <div class="card-broadcast">
                     <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--accent-green); text-transform: uppercase; letter-spacing: 0.05em;">Infrastructure</h3>
                     <ul style="list-style: none; padding: 0; margin: 0; color: var(--text-secondary); font-size: 0.9rem;">
-                        <li style="margin-bottom: 0.5rem;">• Terraform (Infrastructure as Code)</li>
+                        <li style="margin-bottom: 0.5rem;">• Terraform (18 reusable modules)</li>
                         <li style="margin-bottom: 0.5rem;">• AWS S3 (static hosting)</li>
-                        <li style="margin-bottom: 0.5rem;">• IAM roles & policies</li>
-                        <li style="margin-bottom: 0.5rem;">• Route53 (future: custom domain)</li>
+                        <li style="margin-bottom: 0.5rem;">• IAM roles &amp; policies (ARN-scoped)</li>
+                        <li style="margin-bottom: 0.5rem;">• CloudWatch alarms + SNS alerts</li>
+                        <li style="margin-bottom: 0.5rem;">• GitHub Actions CI/CD</li>
                     </ul>
                 </div>
                 
@@ -178,7 +180,7 @@
     <section style="padding: 5rem 0; background: var(--bg-secondary); border-top: 1px solid var(--border-color);">
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
             <h2 style="font-family: 'Barlow Condensed', sans-serif; font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">IMPLEMENTATION PLAN & ROADMAP</h2>
-            <p style="color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-bottom: 2.5rem; letter-spacing: 0.04em; text-transform: uppercase;">Last updated: April 14, 2026</p>
+            <p style="color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-bottom: 2.5rem; letter-spacing: 0.04em; text-transform: uppercase;">Last updated: August 3, 2026</p>
             
             <div style="display: grid; gap: 2rem;">
                 <!-- Phase 1: Completed -->
@@ -238,59 +240,63 @@
                 </div>
 
                 <!-- Phase 3: CI/CD -->
-                <div class="card-broadcast" style="border-left: 3px solid var(--accent-blue); animation: slideInLeft 0.6s ease-out backwards; animation-delay: 0.3s;">
+                <div class="card-broadcast" style="border-left: 3px solid var(--accent-green); animation: slideInLeft 0.6s ease-out backwards; animation-delay: 0.3s;">
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
                         <div>
                             <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Phase 3: CI/CD Pipeline</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.35rem;">So changes ship safely without any manual steps</p>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.35rem;">Changes ship safely without manual steps</p>
                         </div>
-                        <span style="background: var(--accent-blue); color: var(--bg-primary); padding: 0.35rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;">IN PROGRESS</span>
+                        <span style="background: var(--accent-green); color: var(--bg-primary); padding: 0.35rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;">COMPLETED</span>
                     </div>
                     <ul style="list-style: none; padding: 0; margin: 0; color: var(--text-secondary);">
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: var(--accent-blue);">○</span>
+                            <span style="position: absolute; left: 0; color: var(--accent-green);">✓</span>
                             GitHub Actions: push to <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">main</span> auto-deploys frontend (S3 sync + CloudFront invalidation)
                         </li>
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: var(--accent-blue);">○</span>
+                            <span style="position: absolute; left: 0; color: var(--accent-green);">✓</span>
                             Backend Lambda packaged and deployed automatically on code change
                         </li>
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: var(--accent-blue);">○</span>
+                            <span style="position: absolute; left: 0; color: var(--accent-green);">✓</span>
                             Pull request triggers <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">terraform plan</span> and posts the diff as a PR comment
                         </li>
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: var(--accent-blue);">○</span>
-                            GitHub OIDC → IAM role (no long-lived AWS credentials stored anywhere)
+                            <span style="position: absolute; left: 0; color: var(--accent-green);">✓</span>
+                            AWS credentials via GitHub Secrets (<span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">AWS_ACCESS_KEY_ID</span> / <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">AWS_SECRET_ACCESS_KEY</span>)
                         </li>
                     </ul>
                 </div>
 
                 <!-- Phase 4: Observability -->
-                <div class="card-broadcast" style="border-left: 3px solid var(--text-muted); animation: slideInLeft 0.6s ease-out backwards; animation-delay: 0.4s;">
+                <div class="card-broadcast" style="border-left: 3px solid var(--accent-green); animation: slideInLeft 0.6s ease-out backwards; animation-delay: 0.4s;">
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
                         <div>
-                            <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Phase 4: Observability Stack</h3>
+                            <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Phase 4: Observability &amp; Security Hardening</h3>
                             <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.35rem;">Know immediately when something breaks before a user does</p>
                         </div>
-                        <span style="background: var(--text-muted); color: var(--bg-primary); padding: 0.35rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;">PLANNED Q3 2026</span>
+                        <span style="background: var(--accent-green); color: var(--bg-primary); padding: 0.35rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;">COMPLETED</span>
                     </div>
                     <ul style="list-style: none; padding: 0; margin: 0; color: var(--text-secondary);">
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
-                            Lambda Powertools: structured JSON logging + X-Ray tracing on every request
+                            <span style="position: absolute; left: 0; color: var(--accent-green);">✓</span>
+                            Lambda Powertools: structured JSON logging + X-Ray active tracing on every request
                         </li>
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
-                            CloudWatch dashboard: API latency P50/P95/P99, Lambda errors, DynamoDB capacity
+                            <span style="position: absolute; left: 0; color: var(--accent-green);">✓</span>
+                            CloudWatch dashboard: API latency P99, Lambda errors &amp; invocations, DynamoDB capacity
                         </li>
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
-                            SNS alarms → email on Lambda error spike, API 5xx rate, or billing threshold
+                            <span style="position: absolute; left: 0; color: var(--accent-green);">✓</span>
+                            SNS alerts: CloudWatch alarms for Lambda errors and API 5XX rate
                         </li>
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: var(--text-muted);">○</span>
-                            X-Ray service map: end-to-end trace from CloudFront → API GW → Lambda → DynamoDB
+                            <span style="position: absolute; left: 0; color: var(--accent-green);">✓</span>
+                            XSS remediated on all frontend JS files; CORS scoped to CloudFront origin
+                        </li>
+                        <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--accent-green);">✓</span>
+                            IAM policies ARN-scoped to account + region via <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">templatefile()</span>
                         </li>
                     </ul>
                 </div>
@@ -302,7 +308,7 @@
                             <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Phase 5: API Rate Limiting + WAF</h3>
                             <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.35rem;">Protect availability and cost from abuse and crawlers</p>
                         </div>
-                        <span style="background: var(--text-muted); color: var(--bg-primary); padding: 0.35rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;">PLANNED Q3 2026</span>
+                        <span style="background: var(--text-muted); color: var(--bg-primary); padding: 0.35rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;">PLANNED</span>
                     </div>
                     <ul style="list-style: none; padding: 0; margin: 0; color: var(--text-secondary);">
                         <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">

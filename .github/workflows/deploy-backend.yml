@@ -1,0 +1,79 @@
+name: EuroleagueTech Platform — Deploy Backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - ".github/workflows/deploy-backend.yml"
+  workflow_dispatch:
+
+env:
+  AWS_REGION: "eu-west-1"
+  PYTHON_VERSION: "3.12"
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: "eu-west-1"
+
+concurrency:
+  group: deploy-backend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Package and Deploy Lambda Functions
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies into package dir
+        run: |
+          pip install -r backend/src/requirements.txt \
+            -t /tmp/lambda-pkg \
+            --platform manylinux2014_x86_64 \
+            --only-binary=:all: \
+            --python-version ${{ env.PYTHON_VERSION }} \
+            --upgrade \
+            --no-cache-dir
+
+      - name: Copy source into package
+        run: cp -r backend/src/. /tmp/lambda-pkg/
+
+      - name: Create deployment zip
+        run: |
+          cd /tmp/lambda-pkg
+          find . -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+          zip -r /tmp/lambda.zip .
+
+      - name: Verify zip contents
+        run: |
+          unzip -l /tmp/lambda.zip | grep -E "handlers/|utils/|aws_lambda_powertools"
+
+      - name: Deploy vendors-api
+        run: |
+          aws lambda update-function-code \
+            --function-name spotech-dev-vendors-api \
+            --zip-file fileb:///tmp/lambda.zip \
+            --no-cli-pager
+
+      - name: Deploy teams-api
+        run: |
+          aws lambda update-function-code \
+            --function-name spotech-dev-teams-api \
+            --zip-file fileb:///tmp/lambda.zip \
+            --no-cli-pager
+
+      - name: Wait for update to complete
+        run: |
+          aws lambda wait function-updated --function-name spotech-dev-vendors-api
+          aws lambda wait function-updated --function-name spotech-dev-teams-api
+          echo "Both functions updated successfully"

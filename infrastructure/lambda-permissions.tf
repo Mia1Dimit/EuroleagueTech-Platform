@@ -1,8 +1,8 @@
 module "lambda_permissions" {
   source = "../modules/lambda-permission"
-  
+
   for_each = var.lambda_permissions
-  
+
   statement_id           = each.value.statement_id
   action                 = each.value.action
   function_name          = each.value.function_name

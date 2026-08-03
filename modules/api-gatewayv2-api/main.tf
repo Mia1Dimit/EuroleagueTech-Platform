@@ -1,6 +1,6 @@
 resource "aws_apigatewayv2_api" "apigatewayv2_api" {
-  name                       = var.name
-  protocol_type              = var.protocol_type
+  name          = var.name
+  protocol_type = var.protocol_type
 
   api_key_selection_expression = var.api_key_selection_expression
   credentials_arn              = var.credentials_arn

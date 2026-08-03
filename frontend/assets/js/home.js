@@ -1,6 +1,24 @@
 // API Configuration
 const API_BASE_URL = 'https://1o8pl970wc.execute-api.eu-west-1.amazonaws.com/dev';
 
+function escapeHtml(str) {
+    if (str == null) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function safeHref(url) {
+    if (!url) return '#';
+    try {
+        const parsed = new URL(url);
+        return (parsed.protocol === 'https:' || parsed.protocol === 'http:') ? url : '#';
+    } catch { return '#'; }
+}
+
 // Fetch and display featured vendors on homepage
 async function loadFeaturedVendors() {
     try {
@@ -45,30 +63,30 @@ function createVendorCard(vendor, compact = false) {
     return `
         <div class="bg-white rounded-lg border border-gray-200 p-6 card-hover shadow-sm data-card">
             <div class="flex items-start justify-between mb-4">
-                <h3 class="text-xl font-semibold text-gray-800">${vendor.Name}</h3>
+                <h3 class="text-xl font-semibold text-gray-800">${escapeHtml(vendor.Name)}</h3>
                 ${vendor.PrimaryCategory ? `
                     <span class="px-2 py-1 text-xs font-semibold rounded-full ${categoryClass}">
-                        ${vendor.PrimaryCategory}
+                        ${escapeHtml(vendor.PrimaryCategory)}
                     </span>
                 ` : ''}
             </div>
             
             ${vendor.Description ? `
-                <p class="text-gray-600 text-sm mb-4 line-clamp-3">${vendor.Description}</p>
+                <p class="text-gray-600 text-sm mb-4 line-clamp-3">${escapeHtml(vendor.Description)}</p>
             ` : ''}
             
             <div class="flex items-center justify-between text-sm text-gray-500">
                 ${vendor.Country ? `
-                    <span>📍 ${vendor.Country}</span>
+                    <span>📍 ${escapeHtml(vendor.Country)}</span>
                 ` : ''}
                 ${vendor.Founded ? `
-                    <span>📅 ${vendor.Founded}</span>
+                    <span>📅 ${escapeHtml(String(vendor.Founded))}</span>
                 ` : ''}
             </div>
             
             ${vendor.Website ? `
                 <div class="mt-4 pt-4 border-t border-gray-200">
-                    <a href="${vendor.Website}" target="_blank" rel="noopener noreferrer"
+                    <a href="${safeHref(vendor.Website)}" target="_blank" rel="noopener noreferrer"
                        class="text-euroleague-orange hover:text-orange-700 font-medium text-sm">
                         Learn More →
                     </a>
