@@ -106,6 +106,7 @@ module "dashboard_main" {
         height = 6
         properties = {
           title   = "API Gateway 5XX Errors"
+          region  = var.aws_region
           period  = 300
           stat    = "Sum"
           metrics = [["AWS/ApiGateway", "5XXError", "ApiId", module.api_definitions["main"].api_id, "Stage", "dev"]]
@@ -120,6 +121,7 @@ module "dashboard_main" {
         height = 6
         properties = {
           title   = "API Gateway Latency P99 (ms)"
+          region  = var.aws_region
           period  = 300
           stat    = "p99"
           metrics = [["AWS/ApiGateway", "IntegrationLatency", "ApiId", module.api_definitions["main"].api_id, "Stage", "dev"]]
@@ -134,6 +136,7 @@ module "dashboard_main" {
         height = 6
         properties = {
           title  = "Lambda Invocations"
+          region = var.aws_region
           period = 300
           stat   = "Sum"
           metrics = [
@@ -151,6 +154,7 @@ module "dashboard_main" {
         height = 6
         properties = {
           title  = "Lambda Duration P99 (ms)"
+          region = var.aws_region
           period = 300
           stat   = "p99"
           metrics = [
@@ -168,6 +172,7 @@ module "dashboard_main" {
         height = 6
         properties = {
           title  = "Lambda Errors"
+          region = var.aws_region
           period = 300
           stat   = "Sum"
           metrics = [
@@ -185,6 +190,7 @@ module "dashboard_main" {
         height = 6
         properties = {
           title   = "DynamoDB Consumed Read Capacity"
+          region  = var.aws_region
           period  = 300
           stat    = "Sum"
           metrics = [["AWS/DynamoDB", "ConsumedReadCapacityUnits", "TableName", "spotech-dev-main"]]
