@@ -4,7 +4,7 @@ A **knowledge hub and comparison platform for European sports technology**, buil
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Terraform Version](https://img.shields.io/badge/terraform-%3E%3D1.0-blue)](https://www.terraform.io/)
-[![Python](https://img.shields.io/badge/python-3.9%2B-green)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/python-3.12%2B-green)](https://www.python.org/)
 
 ---
 
