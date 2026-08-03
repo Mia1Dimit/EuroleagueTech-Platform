@@ -20,17 +20,42 @@ locals {
     for s in data.aws_subnet.subnets_by_id : lookup(s.tags, "Linked_sg", null)
   ]))
   final_sg_list = [for sg in data.aws_security_group.linked_sg : sg.id]
+  build_dir     = var.source_dir != null ? "${path.module}/.build/${var.function_name}" : null
 }
 ###
+
+resource "null_resource" "prepare_build" {
+  count = var.source_dir != null ? 1 : 0
+
+  triggers = {
+    source_dir        = var.source_dir
+    requirements_hash = fileexists("${var.source_dir}/requirements.txt") ? filesha256("${var.source_dir}/requirements.txt") : ""
+  }
+
+  provisioner "local-exec" {
+    command     = <<-EOT
+      $ErrorActionPreference = "Stop"
+      if (Test-Path "${local.build_dir}") { Remove-Item -Recurse -Force "${local.build_dir}" }
+      New-Item -ItemType Directory -Force -Path "${local.build_dir}" | Out-Null
+      Copy-Item -Path "${var.source_dir}/*" -Destination "${local.build_dir}" -Recurse -Force
+      if (Test-Path "${var.source_dir}/requirements.txt") {
+        python -m pip install -r "${var.source_dir}/requirements.txt" -t "${local.build_dir}" --upgrade
+      }
+    EOT
+    interpreter = ["PowerShell", "-Command"]
+  }
+}
 
 ### Creare un file zip del codice sorgente 
 data "archive_file" "lambda_zip" {
   count = var.source_dir != null ? 1 : 0
 
+  depends_on = [null_resource.prepare_build]
+
   type        = "zip"
-  source_dir  = var.source_dir  # Points to backend/src
+  source_dir  = local.build_dir # Build dir with source + vendored dependencies
   output_path = var.output_path # /tmp/vendors-api.zip
-  excludes    = ["__pycache__", "*.pyc", ".git"]
+  excludes    = ["__pycache__", "*.pyc", ".git", "*.dist-info/*", "*.egg-info/*"]
 }
 
 resource "aws_lambda_function" "lambda_function" {
