@@ -288,12 +288,6 @@ variable "lambdas" {
   default = {}
 }
 
-variable "github_repo" {
-  description = "GitHub repository for OIDC trust (e.g. Mia1Dimit/EuroleagueTech-Platform)"
-  type        = string
-  default     = "Mia1Dimit/EuroleagueTech-Platform"
-}
-
 variable "cloudwatch_log_groups" {
   description = "Map of CloudWatch log groups to create"
   type = map(object({
