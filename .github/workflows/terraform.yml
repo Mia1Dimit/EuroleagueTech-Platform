@@ -98,7 +98,7 @@ jobs:
           terraform -chdir=head/${{ env.TF_ROOT }} show -json tfplan \
             > head/${{ env.TF_ROOT }}/plan.json
 
-      - name: Infracost Diff
+      - name: Infracost Breakdown
         uses: infracost/actions/diff@v4
         with:
           api-key: ${{ secrets.INFRACOST_API_KEY_FILE_EUROL }}
