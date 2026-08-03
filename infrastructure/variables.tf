@@ -26,7 +26,7 @@ variable "applicationname" {
 variable "aws_region" {
   type        = string
   description = "AWS region for resources"
-  default     = "eu-west-1"  # Project default: Ireland
+  default     = "eu-west-1" # Project default: Ireland
 }
 
 # -----------------------------------------------------------------------------
@@ -37,35 +37,35 @@ variable "s3_buckets" {
   type = map(object({
     # REQUIRED by AWS
     bucket_name = string
-    
+
     # OPTIONAL - Project preferences with smart defaults
     purpose               = optional(string, "General Storage")
-    force_destroy         = optional(bool, false)  # Safe default
-    blockpublicacls       = optional(bool, true)   # Secure default
-    blockpublicpolicy     = optional(bool, true)   # Secure default
-    ignorepublicacls      = optional(bool, true)   # Secure default
-    restrictpublicbuckets = optional(bool, true)   # Secure default
-    enable_versioning     = optional(string, "Enabled")  # Best practice
+    force_destroy         = optional(bool, false)       # Safe default
+    blockpublicacls       = optional(bool, true)        # Secure default
+    blockpublicpolicy     = optional(bool, true)        # Secure default
+    ignorepublicacls      = optional(bool, true)        # Secure default
+    restrictpublicbuckets = optional(bool, true)        # Secure default
+    enable_versioning     = optional(string, "Enabled") # Best practice
     object_ownership      = optional(string, "BucketOwnerEnforced")
     specifictags          = optional(map(string), {})
-    
+
     # Lifecycle rules - completely optional
     rules = optional(map(object({
       id     = string
       status = string
       expiration = optional(map(object({
-        date = optional(string)  # No default - null if not provided
-        days = optional(number)  # No default - null if not provided
+        date = optional(string) # No default - null if not provided
+        days = optional(number) # No default - null if not provided
       })), {})
       transition = optional(map(object({
-        date          = optional(string)  # No default - null if not provided
-        days          = optional(number)  # No default - null if not provided
+        date          = optional(string) # No default - null if not provided
+        days          = optional(number) # No default - null if not provided
         storage_class = string
       })), {})
       filters = optional(map(object({
-        prefix                   = optional(string)  # No default - null if not provided
-        object_size_greater_than = optional(number)  # No default - null if not provided
-        object_size_less_than    = optional(number)  # No default - null if not provided
+        prefix                   = optional(string) # No default - null if not provided
+        object_size_greater_than = optional(number) # No default - null if not provided
+        object_size_less_than    = optional(number) # No default - null if not provided
       })), {})
     })), {})
   }))
@@ -81,7 +81,7 @@ variable "s3_website_configs" {
     # All optional - SPA-friendly defaults
     index_document_suffix = optional(string, "index.html")
     error_document_key    = optional(string, "index.html")
-    routing_rules         = optional(list(object({
+    routing_rules = optional(list(object({
       condition = object({
         http_error_code_returned_equals = optional(string)
         key_prefix_equals               = optional(string)
@@ -104,8 +104,8 @@ variable "s3_website_configs" {
 variable "s3_sse_configs" {
   description = "Map of S3 encryption configurations"
   type = map(object({
-    sse_algorithm = optional(string, "AES256")  # Free encryption
-    kms_key_id    = optional(string)  # No default - null when not using KMS
+    sse_algorithm = optional(string, "AES256") # Free encryption
+    kms_key_id    = optional(string)           # No default - null when not using KMS
   }))
   default = {}
 }
@@ -116,18 +116,18 @@ variable "s3_sse_configs" {
 variable "s3_cors_configs" {
   description = "Map of S3 CORS configurations"
   type = map(object({
-    expected_bucket_owner = optional(string)  # No default - null if not provided
-    
+    expected_bucket_owner = optional(string) # No default - null if not provided
+
     # REQUIRED by AWS if using CORS
     cors_rules = list(object({
-      allowed_methods = list(string)  # REQUIRED
-      allowed_origins = list(string)  # REQUIRED
-      
+      allowed_methods = list(string) # REQUIRED
+      allowed_origins = list(string) # REQUIRED
+
       # Optional CORS fields
       allowed_headers = optional(list(string), ["*"])
       expose_headers  = optional(list(string), [])
       max_age_seconds = optional(number, 3600)
-      id              = optional(string)  # No default - null if not provided
+      id              = optional(string) # No default - null if not provided
     }))
   }))
   default = {}
@@ -141,14 +141,14 @@ variable "cloudfront_distributions" {
   type = map(object({
     # REQUIRED - must link to S3 bucket
     s3_bucket_key = string
-    
+
     # OPTIONAL - Project defaults for CDN
     purpose                        = optional(string, "Static Website CDN")
     enabled                        = optional(bool, true)
     is_ipv6_enabled                = optional(bool, true)
     default_root_object            = optional(string, "index.html")
     comment                        = optional(string, "")
-    price_class                    = optional(string, "PriceClass_100")  # Cost-optimized
+    price_class                    = optional(string, "PriceClass_100") # Cost-optimized
     viewer_protocol_policy         = optional(string, "redirect-to-https")
     allowed_methods                = optional(list(string), ["GET", "HEAD", "OPTIONS"])
     cached_methods                 = optional(list(string), ["GET", "HEAD"])
@@ -161,14 +161,14 @@ variable "cloudfront_distributions" {
     ssl_support_method             = optional(string, "sni-only")
     minimum_protocol_version       = optional(string, "TLSv1.2_2021")
     specifictags                   = optional(map(string), {})
-    
+
     # SPA routing defaults
     custom_error_responses = optional(list(object({
       error_code            = number
       response_code         = number
       response_page_path    = string
       error_caching_min_ttl = number
-    })), [
+      })), [
       {
         error_code            = 404
         response_code         = 200
@@ -194,17 +194,17 @@ variable "dynamodb_tables" {
   type = map(object({
     # REQUIRED by AWS
     table_name = string
-    hash_key   = string  # Partition key (PK)
-    range_key  = string  # Sort key (SK)
-    
+    hash_key   = string # Partition key (PK)
+    range_key  = string # Sort key (SK)
+
     # OPTIONAL - Project preferences
     purpose                       = optional(string, "NoSQL Database")
-    billing_mode                  = optional(string, "PAY_PER_REQUEST")  # on-demand
+    billing_mode                  = optional(string, "PAY_PER_REQUEST") # on-demand
     enable_point_in_time_recovery = optional(bool, false)
     enable_encryption             = optional(bool, true)
     stream_enabled                = optional(bool, false)
     specifictags                  = optional(map(string), {})
-    
+
     # Global Secondary Indexes (GSIs)
     global_secondary_indexes = optional(list(object({
       name               = string
@@ -225,15 +225,15 @@ variable "iam_roles" {
   type = map(object({
     # REQUIRED
     name               = string
-    assume_role_policy = string  # Path to JSON policy file in data/iam_role_policies/
-    
+    assume_role_policy = string # Path to JSON policy file in data/iam_role_policies/
+
     # OPTIONAL
     specifictags = optional(map(string), {})
-    
+
     # Inline policies (map of policy name to policy document path)
     policies = optional(map(object({
       name   = string
-      policy = string  # Path to JSON policy file in data/iam_role_policies/
+      policy = string # Path to JSON policy file in data/iam_role_policies/
     })), {})
   }))
   default = {}
@@ -247,27 +247,27 @@ variable "lambdas" {
   type = map(object({
     # REQUIRED for Zip deployment
     function_name = string
-    source_dir    = string  # Path to Lambda source code (e.g., "../backend/src")
-    output_path   = string  # Path for zip file (e.g., "/tmp/vendors-api.zip")
-    handler       = string  # Entry point (e.g., "handlers.vendors_api.lambda_handler")
-    runtime       = string  # Python version (e.g., "python3.12")
-    
+    source_dir    = string # Path to Lambda source code (e.g., "../backend/src")
+    output_path   = string # Path for zip file (e.g., "/tmp/vendors-api.zip")
+    handler       = string # Entry point (e.g., "handlers.vendors_api.lambda_handler")
+    runtime       = string # Python version (e.g., "python3.12")
+
     # OPTIONAL - Project preferences
-    memory_size = optional(number, 256)  # MB
-    timeout     = optional(number, 10)   # Seconds
-    
+    memory_size = optional(number, 256) # MB
+    timeout     = optional(number, 10)  # Seconds
+
     # Package type - defaults to Zip
     package_type = optional(string, "Zip")
-    
+
     # Docker image support (optional, null for Zip deployment)
     image_uri = optional(string)
-    
+
     # Environment variables
     environment_variables = optional(map(string), {})
-    
+
     # Lambda layers
     layers = optional(list(string), [])
-    
+
     # VPC configuration (optional, null = no VPC)
     vpc_config = optional(object({
       subnet_ids         = list(string)
@@ -278,10 +278,10 @@ variable "lambdas" {
     tracing_config = optional(object({
       mode = string
     }))
-    
+
     # Tags
     specifictags = optional(map(string), {})
-    
+
     # Environment override (uses global by default)
     environment = optional(string)
   }))
@@ -323,7 +323,7 @@ variable "api_gtws" {
       integration_method        = optional(string)
       integration_subtype       = optional(string)
       integration_uri           = optional(string)
-      lambda_key                = optional(string)  # Key to lookup Lambda invoke ARN
+      lambda_key                = optional(string) # Key to lookup Lambda invoke ARN
       passthrough_behavior      = optional(string)
       payload_format_version    = optional(string)
       request_parameters        = optional(map(string))
@@ -340,7 +340,7 @@ variable "api_gtws" {
     }))
     routes = map(object({
       route_key                  = string
-      integration_key            = optional(string)  # Key to lookup integration
+      integration_key            = optional(string) # Key to lookup integration
       api_key_required           = optional(bool)
       authorization_scopes       = optional(list(string))
       authorization_type         = optional(string)
@@ -392,11 +392,11 @@ variable "api_gtws" {
 variable "lambda_permissions" {
   description = "Map of Lambda permissions to create"
   type = map(object({
-    statement_id  = string
-    action        = string
-    function_name = string
-    principal     = string
-    source_arn    = string
+    statement_id           = string
+    action                 = string
+    function_name          = string
+    principal              = string
+    source_arn             = string
     function_url_auth_type = string
   }))
   default = {}

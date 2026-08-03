@@ -5,8 +5,8 @@ variable "bucket_name" {
 
 variable "expected_bucket_owner" {
   description = "Account ID of the expected bucket owner."
-  type    = string
-  default = null
+  type        = string
+  default     = null
 }
 
 variable "cors_rules" {

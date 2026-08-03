@@ -1,12 +1,12 @@
 resource "aws_apigatewayv2_stage" "apigatewayv2_stage" {
-  api_id      = var.api_id
-  name        = var.name
+  api_id = var.api_id
+  name   = var.name
 
-  auto_deploy = var.auto_deploy
+  auto_deploy           = var.auto_deploy
   client_certificate_id = var.client_certificate_id
-  deployment_id = var.deployment_id
-  description = var.description
-  stage_variables = var.stage_variables
+  deployment_id         = var.deployment_id
+  description           = var.description
+  stage_variables       = var.stage_variables
 
 
   tags = local.merged_tags
@@ -21,7 +21,7 @@ resource "aws_apigatewayv2_stage" "apigatewayv2_stage" {
     }
   }
 
-   dynamic "default_route_settings" {
+  dynamic "default_route_settings" {
     for_each = var.default_route_settings != null ? [var.default_route_settings] : []
     content {
       data_trace_enabled       = lookup(default_route_settings.value, "data_trace_enabled", null)
@@ -32,7 +32,7 @@ resource "aws_apigatewayv2_stage" "apigatewayv2_stage" {
     }
   }
 
-   dynamic "route_settings" {
+  dynamic "route_settings" {
     for_each = var.route_settings != null ? [var.route_settings] : []
     content {
       route_key                = route_settings.value["route_key"]

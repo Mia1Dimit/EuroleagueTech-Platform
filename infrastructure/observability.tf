@@ -105,11 +105,11 @@ module "dashboard_main" {
         width  = 12
         height = 6
         properties = {
-          title  = "API Gateway 5XX Errors"
-          period = 300
-          stat   = "Sum"
+          title   = "API Gateway 5XX Errors"
+          period  = 300
+          stat    = "Sum"
           metrics = [["AWS/ApiGateway", "5XXError", "ApiId", module.api_definitions["main"].api_id, "Stage", "dev"]]
-          view = "timeSeries"
+          view    = "timeSeries"
         }
       },
       {
@@ -119,11 +119,11 @@ module "dashboard_main" {
         width  = 12
         height = 6
         properties = {
-          title  = "API Gateway Latency P99 (ms)"
-          period = 300
-          stat   = "p99"
+          title   = "API Gateway Latency P99 (ms)"
+          period  = 300
+          stat    = "p99"
           metrics = [["AWS/ApiGateway", "IntegrationLatency", "ApiId", module.api_definitions["main"].api_id, "Stage", "dev"]]
-          view = "timeSeries"
+          view    = "timeSeries"
         }
       },
       {
@@ -184,11 +184,11 @@ module "dashboard_main" {
         width  = 12
         height = 6
         properties = {
-          title  = "DynamoDB Consumed Read Capacity"
-          period = 300
-          stat   = "Sum"
+          title   = "DynamoDB Consumed Read Capacity"
+          period  = 300
+          stat    = "Sum"
           metrics = [["AWS/DynamoDB", "ConsumedReadCapacityUnits", "TableName", "spotech-dev-main"]]
-          view = "timeSeries"
+          view    = "timeSeries"
         }
       }
     ]

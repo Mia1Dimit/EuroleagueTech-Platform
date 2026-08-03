@@ -12,13 +12,13 @@ module "dynamodb" {
   source   = "../modules/dynamodb"
 
   # Required
-  table_name          = each.value["table_name"]
-  hash_key            = each.value["hash_key"]
-  range_key           = each.value["range_key"]
-  environment         = var.environment
-  applicationid       = var.applicationid
-  applicationname     = var.applicationname
-  name                = each.key  # Logical name (e.g., "main")
+  table_name      = each.value["table_name"]
+  hash_key        = each.value["hash_key"]
+  range_key       = each.value["range_key"]
+  environment     = var.environment
+  applicationid   = var.applicationid
+  applicationname = var.applicationname
+  name            = each.key # Logical name (e.g., "main")
 
   # Optional (use project defaults or override in tfvars)
   billing_mode                  = lookup(each.value, "billing_mode", "PAY_PER_REQUEST")

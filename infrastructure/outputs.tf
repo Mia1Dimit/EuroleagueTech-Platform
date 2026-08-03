@@ -80,7 +80,7 @@ output "deployment_summary" {
     iam_roles         = length(module.aws-iam-role)
     lambda_functions  = length(module.lambda)
     log_groups        = length(module.cloudwatch_log_group)
-    website_urls      = {
+    website_urls = {
       for k, v in module.cloudfront : k => "https://${v.domain_name}"
     }
   }
