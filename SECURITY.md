@@ -53,26 +53,26 @@ When deploying EuroleagueTech Cloud Platform:
 
 ### API Security
 - ⚠️ **Current State**: API is publicly accessible (no authentication)
-- 📋 **Phase 3 Plan**: Implement API authentication (API keys or Cognito)
-- 📋 **Phase 3 Plan**: Enable rate limiting and throttling
-- 📋 **Phase 3 Plan**: Validate all inputs
+- 📋 **Next Phase Plan**: Implement API authentication (API keys or Cognito)
+- 📋 **Next Phase Plan**: Enable rate limiting and throttling
+- 📋 **Next Phase Plan**: Expand request validation coverage
 
 ### Frontend Security
-- ⚠️ **Current Finding**: XSS vulnerabilities in HTML injection (see code-reviews/)
-- 📋 **Remediation**: Implement output encoding for user data
+- ✅ **Current State**: XSS output-encoding remediations are in place
+- 📋 **Ongoing**: Keep output encoding and safe URL handling in all new UI code
 - 📋 **Remediation**: Use CSP (Content Security Policy) headers
 
 ## Known Security Considerations
 
 See [code-reviews/](code-reviews/) for principal-level security audit findings, including:
 
-1. XSS vulnerabilities (output encoding needed)
-2. API authentication gaps (no auth required)
-3. CORS configuration (wildcard origins in dev)
-4. IAM policy least-privilege issues
-5. Data logging verbosity
+1. API authentication gaps (no auth required)
+2. Rate limiting and abuse protections
+3. CSP/security header hardening
+4. IAM policy least-privilege maintenance
+5. Data logging verbosity controls
 
-Each finding includes remediation guidance. Phase 3 prioritizes addressing P0/P1 findings.
+Each finding includes remediation guidance. Keep the code-reviews folder as the source of truth for historical findings and closure notes.
 
 ## Keeping Dependencies Secure
 

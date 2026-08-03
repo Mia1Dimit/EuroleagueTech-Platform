@@ -1,8 +1,8 @@
 # SportsTech Cloud Platform - Architecture Documentation
 
-**Version**: 1.0  
-**Last Updated**: March 20, 2026  
-**Status**: Design Phase
+**Version**: 1.1  
+**Last Updated**: August 3, 2026  
+**Status**: Production baseline with planned extensions
 
 ---
 
@@ -36,11 +36,9 @@ graph TB
         end
         
         subgraph "API Layer"
-            APIGW[API Gateway]
-            Lambda1[Lambda: Get Vendors]
-            Lambda2[Lambda: Get Teams]
-            Lambda3[Lambda: Compare Vendors]
-            Lambda4[Lambda: Search]
+          APIGW[API Gateway]
+          Lambda1[Lambda: Get Vendors]
+          Lambda2[Lambda: Get Teams]
         end
         
         subgraph "Data Layer"
@@ -49,8 +47,7 @@ graph TB
         end
         
         subgraph "Security & Auth"
-            Cognito[Cognito User Pool]
-            IAM[IAM Roles & Policies]
+          IAM[IAM Roles & Policies]
         end
         
         subgraph "Monitoring"
@@ -73,18 +70,12 @@ graph TB
     
     APIGW --> Lambda1
     APIGW --> Lambda2
-    APIGW --> Lambda3
-    APIGW --> Lambda4
-    
     Lambda1 --> DDB
     Lambda2 --> DDB
-    Lambda3 --> DDB
-    Lambda4 --> DDB
     
     Lambda1 --> S3Data
     Lambda2 --> S3Data
     
-    APIGW --> Cognito
     Lambda1 -.->|Assumes| IAM
     Lambda2 -.->|Assumes| IAM
     
@@ -132,8 +123,6 @@ graph TB
         APIGW[API Gateway HTTP API]
         Lambda1[Get Vendors]
         Lambda2[Get Teams]
-        Lambda3[Get Partnerships]
-        Lambda4[Compare Vendors]
     end
     
     subgraph "Data Layer"
@@ -144,13 +133,8 @@ graph TB
     React -->|HTTPS| APIGW
     APIGW --> Lambda1
     APIGW --> Lambda2
-    APIGW --> Lambda3
-    APIGW --> Lambda4
-    
     Lambda1 --> DDB
     Lambda2 --> DDB
-    Lambda3 --> DDB
-    Lambda4 --> DDB
     
     DDB --> Tables
     
@@ -160,8 +144,8 @@ graph TB
 ```
 
 **Components**:
-- **API Gateway**: RESTful HTTP API, CORS enabled
-- **Lambda Functions**: Python 3.11, DynamoDB access
+- **API Gateway**: HTTP API, CORS enabled
+- **Lambda Functions**: Python 3.12, DynamoDB access
 - **DynamoDB**: NoSQL database, on-demand billing
 
 **Cost**: +$3-5/month
@@ -657,15 +641,14 @@ sequenceDiagram
 | GET | `/vendors/{id}` | `get_vendor_by_id` | None |
 | GET | `/teams` | `get_teams` | None |
 | GET | `/teams/{id}` | `get_team_by_id` | None |
-| POST | `/compare` | `compare_vendors` | None |
-| GET | `/search?q={query}` | `search` | None |
-| POST | `/partnerships` | `create_partnership` | Cognito (Phase 3) |
+
+Planned routes (not yet deployed): `/compare`, `/search`, authenticated write endpoints.
 
 **CORS Configuration**:
 ```json
 {
-  "allowOrigins": ["https://sportstech.cloud", "http://localhost:5173"],
-  "allowMethods": ["GET", "POST", "OPTIONS"],
+  "allowOrigins": ["https://d3n25hf9bvh9rw.cloudfront.net"],
+  "allowMethods": ["GET", "OPTIONS"],
   "allowHeaders": ["Content-Type", "Authorization"],
   "maxAge": 3600
 }
