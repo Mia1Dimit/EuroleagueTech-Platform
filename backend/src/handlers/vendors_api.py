@@ -14,38 +14,20 @@ API Gateway Integration:
 import sys
 import os
 
-# Add utils to Python path so we can import them
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'utils'))
 
+from aws_lambda_powertools import Logger, Tracer
+from aws_lambda_powertools.utilities.typing import LambdaContext
 from response import success, error
 from dynamodb import get_item, scan_items
 
+logger = Logger()
+tracer = Tracer()
 
-def lambda_handler(event, context):
-    """
-    Main Lambda entry point.
-    
-    Args:
-        event: API Gateway request event (dict)
-            - httpMethod: GET, POST, etc.
-            - pathParameters: URL path params {vendorId: "value"}
-            - queryStringParameters: Query string ?category=value
-            - body: Request body (for POST)
-        
-        context: Lambda runtime context (region, function name, etc.)
-    
-    Returns:
-        Response dict with statusCode, headers, body
-    
-    SAA Exam Note:
-        Lambda gets event + context from trigger (API Gateway, S3, etc.)
-        Event structure varies by trigger type
-        API Gateway event has httpMethod, pathParameters, body
-    """
-    
-    print(f"Received event: {event}")  # CloudWatch Logs
-    
-    # Route request based on path
+
+@tracer.capture_lambda_handler
+@logger.inject_lambda_context(log_event=False)
+def lambda_handler(event, context: LambdaContext):
     path_params = event.get('pathParameters') or {}
     vendor_id = path_params.get('vendorId')
     

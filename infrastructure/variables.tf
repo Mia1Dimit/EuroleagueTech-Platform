@@ -273,6 +273,11 @@ variable "lambdas" {
       subnet_ids         = list(string)
       security_group_ids = list(string)
     }))
+
+    # X-Ray tracing (optional, null = no tracing)
+    tracing_config = optional(object({
+      mode = string
+    }))
     
     # Tags
     specifictags = optional(map(string), {})
@@ -281,6 +286,12 @@ variable "lambdas" {
     environment = optional(string)
   }))
   default = {}
+}
+
+variable "github_repo" {
+  description = "GitHub repository for OIDC trust (e.g. Mia1Dimit/EuroleagueTech-Platform)"
+  type        = string
+  default     = "Mia1Dimit/EuroleagueTech-Platform"
 }
 
 variable "cloudwatch_log_groups" {

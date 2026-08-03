@@ -1,6 +1,24 @@
 // API Configuration
 const API_BASE_URL = 'https://1o8pl970wc.execute-api.eu-west-1.amazonaws.com/dev';
 
+function escapeHtml(str) {
+    if (str == null) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function safeHref(url) {
+    if (!url) return '#';
+    try {
+        const parsed = new URL(url);
+        return (parsed.protocol === 'https:' || parsed.protocol === 'http:') ? url : '#';
+    } catch { return '#'; }
+}
+
 // State
 let allTeams = [];
 let filteredTeams = [];
@@ -59,8 +77,20 @@ function updateTeamsHeadlineMetrics() {
 function populateCountryFilter() {
     const countries = [...new Set(allTeams.map(team => team.Country))].sort();
     
-    countryFilter.innerHTML = '<option value="">All Countries</option>' +
-        countries.map(country => `<option value="${country}">${country}</option>`).join('');
+    // Build with DOM API to avoid innerHTML injection via country names from API
+    countryFilter.innerHTML = '';
+    const defaultOpt = document.createElement('option');
+    defaultOpt.value = '';
+    defaultOpt.textContent = 'All Countries';
+    countryFilter.appendChild(defaultOpt);
+    countries.forEach(country => {
+        if (country) {
+            const opt = document.createElement('option');
+            opt.value = country;
+            opt.textContent = country;
+            countryFilter.appendChild(opt);
+        }
+    });
 }
 
 // Display teams
@@ -76,6 +106,10 @@ function displayTeams() {
     noResults.classList.add('hidden');
     
     teamsList.innerHTML = filteredTeams.map(team => createTeamCard(team)).join('');
+    // Event delegation — prevents JS injection via TeamID in onclick
+    teamsList.querySelectorAll('[data-team-id]').forEach(card => {
+        card.addEventListener('click', () => showTeamModal(card.dataset.teamId));
+    });
     resultsCount.textContent = filteredTeams.length;
 }
 
@@ -100,15 +134,15 @@ function createTeamCard(team) {
     const flag = flagEmoji[team.Country] || '🏀';
     
     return `
-        <div class="card-broadcast" style="cursor: pointer;" onclick="showTeamModal('${team.TeamID}')">
+        <div class="card-broadcast" style="cursor: pointer;" data-team-id="${escapeHtml(team.TeamID)}">
             <div style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">${flag}</div>
             
             <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; text-align: center;">
-                ${team.Name}
+                ${escapeHtml(team.Name)}
             </h3>
             
             ${team.City ? `
-                <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">${team.City}</p>
+                <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">${escapeHtml(team.City)}</p>
             ` : ''}
             
             <div style="font-size: 0.85rem; color: var(--text-muted); space-y: 0.5rem;">
@@ -117,7 +151,7 @@ function createTeamCard(team) {
                         <svg style="width: 1rem; height: 1rem; margin-right: 0.5rem; margin-top: 0.1rem; color: var(--orange-primary); flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                         </svg>
-                        <span style="flex: 1;">${team.Arena}</span>
+                        <span style="flex: 1;">${escapeHtml(team.Arena)}</span>
                     </div>
                 ` : ''}
                 ${team.Country ? `
@@ -125,7 +159,7 @@ function createTeamCard(team) {
                         <svg style="width: 1rem; height: 1rem; margin-right: 0.5rem; color: var(--orange-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path>
                         </svg>
-                        ${team.Country}
+                        ${escapeHtml(team.Country)}
                     </div>
                 ` : ''}
             </div>
@@ -205,13 +239,13 @@ function createPartnershipCard(partnerName, metadata) {
                 <svg style="width: 1.25rem; height: 1.25rem; margin-right: 0.75rem; color: var(--accent-green); flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-secondary);">${partnerName}</span>
+                <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-secondary);">${escapeHtml(partnerName)}</span>
             </div>
             ${startYear || confidence || source ? `
                 <div style="margin-left: 2rem; font-size: 0.8rem; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 0.65rem;">
-                    ${startYear ? `<span>Start: <strong style="color: var(--text-secondary);">${startYear}</strong></span>` : ''}
-                    ${confidence ? `<span>Confidence: <strong style="color: var(--text-secondary);">${confidence}</strong></span>` : ''}
-                    ${source ? `<a href="${source}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="color: var(--orange-primary); text-decoration: none;">Source ↗</a>` : ''}
+                    ${startYear ? `<span>Start: <strong style="color: var(--text-secondary);">${escapeHtml(String(startYear))}</strong></span>` : ''}
+                    ${confidence ? `<span>Confidence: <strong style="color: var(--text-secondary);">${escapeHtml(String(confidence))}</strong></span>` : ''}
+                    ${source ? `<a href="${safeHref(source)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="color: var(--orange-primary); text-decoration: none;">Source ↗</a>` : ''}
                 </div>
             ` : ''}
         </div>
@@ -255,10 +289,10 @@ async function showTeamModal(teamId) {
                     <span style="font-size: 3.5rem;">${flag}</span>
                     <div>
                         <h2 style="font-family: 'Barlow Condensed', sans-serif; font-size: 2.5rem; font-weight: 900; color: var(--text-primary); margin-bottom: 0.5rem;">
-                            ${team.Name}
+                            ${escapeHtml(team.Name)}
                         </h2>
                         <p style="font-size: 1rem; color: var(--text-secondary); font-family: 'Outfit', sans-serif; margin-top: 0.25rem;">
-                            ${team.City ? team.City + ', ' : ''}${team.Country}
+                            ${team.City ? escapeHtml(team.City) + ', ' : ''}${escapeHtml(team.Country)}
                         </p>
                     </div>
                 </div>
@@ -282,19 +316,19 @@ async function showTeamModal(teamId) {
                     ${team.Arena ? `
                         <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 1rem;">
                             <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Home Arena</div>
-                            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">${team.Arena}</div>
+                            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">${escapeHtml(team.Arena)}</div>
                         </div>
                     ` : ''}
                     ${team.ArenaCapacity ? `
                         <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 1rem;">
                             <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Arena Capacity</div>
-                            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">${team.ArenaCapacity.toLocaleString()} seats</div>
+                            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">${escapeHtml(team.ArenaCapacity.toLocaleString())} seats</div>
                         </div>
                     ` : ''}
                     ${team.EuroleagueStatus ? `
                         <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 1rem; grid-column: span 2;">
                             <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Euroleague Status</div>
-                            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">${team.EuroleagueStatus}</div>
+                            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">${escapeHtml(team.EuroleagueStatus)}</div>
                         </div>
                     ` : ''}
                 </div>
@@ -328,7 +362,7 @@ async function showTeamModal(teamId) {
             
             ${team.Website ? `
                 <div style="padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
-                    <a href="${team.Website}" target="_blank" rel="noopener noreferrer"
+                    <a href="${safeHref(team.Website)}" target="_blank" rel="noopener noreferrer"
                        onclick="event.stopPropagation()"
                        style="display: inline-flex; align-items: center; padding: 1rem 2rem; background: var(--orange-primary); color: var(--bg-primary); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; text-decoration: none; transition: all 0.3s; border: 2px solid var(--orange-primary);"
                        onmouseover="this.style.background='transparent'; this.style.color='var(--orange-primary)'"
@@ -336,7 +370,7 @@ async function showTeamModal(teamId) {
                         <svg style="width: 1.25rem; height: 1.25rem; margin-right: 0.75rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
                         </svg>
-                        Visit ${team.Name} Website
+                        Visit ${escapeHtml(team.Name)} Website
                         <svg style="width: 1rem; height: 1rem; margin-left: 0.75rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
                         </svg>

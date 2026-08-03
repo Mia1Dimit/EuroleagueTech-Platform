@@ -34,5 +34,8 @@ module "aws-iam-role-policy" {
 
   name   = each.value["name"]
   role   = each.value["role_id"]
-  policy = file("${path.module}/data/iam_role_policies/${each.value["policy"]}")
+  policy = templatefile("${path.module}/data/iam_role_policies/${each.value["policy"]}", {
+    account_id = data.aws_caller_identity.current.account_id
+    region     = var.aws_region
+  })
 }

@@ -1,5 +1,25 @@
 // API Configuration
 const API_BASE_URL = 'https://1o8pl970wc.execute-api.eu-west-1.amazonaws.com/dev';
+
+// Sanitise API-provided strings before inserting into innerHTML
+function escapeHtml(str) {
+    if (str == null) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+// Validate that a URL from the API is http/https before using as href
+function safeHref(url) {
+    if (!url) return '#';
+    try {
+        const parsed = new URL(url);
+        return (parsed.protocol === 'https:' || parsed.protocol === 'http:') ? url : '#';
+    } catch { return '#'; }
+}
 const LANDING_TECH_CATEGORIES = [
     'Performance Tracking',
     'Video Analysis',
@@ -76,6 +96,10 @@ function displayVendors() {
     noResults.classList.add('hidden');
     
     vendorsList.innerHTML = filteredVendors.map(vendor => createVendorCard(vendor)).join('');
+    // Event delegation instead of inline onclick — prevents JS injection via VendorID
+    vendorsList.querySelectorAll('[data-vendor-id]').forEach(card => {
+        card.addEventListener('click', () => showVendorModal(card.dataset.vendorId));
+    });
     resultsCount.textContent = filteredVendors.length;
 }
 
@@ -170,18 +194,18 @@ function createVendorCard(vendor) {
     const emoji = categoryEmojis[normalizedCategory] || '🔧';
     
     return `
-        <div class="card-broadcast" style="cursor: pointer;" onclick="showVendorModal('${vendor.VendorID}')">
+        <div class="card-broadcast" style="cursor: pointer;" data-vendor-id="${escapeHtml(vendor.VendorID)}">
             <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
                 <div style="flex: 1;">
                     <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
                         <span style="font-size: 2rem;">${emoji}</span>
                         <h3 style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">
-                            ${vendor.Name}
+                            ${escapeHtml(vendor.Name)}
                         </h3>
                     </div>
                     ${normalizedCategory ? `
                         <div style="background: rgba(255, 102, 0, 0.1); border: 1px solid rgba(255, 102, 0, 0.3); color: var(--orange-primary); padding: 0.25rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; display: inline-block; margin-top: 0.5rem;">
-                            ${normalizedCategory}
+                            ${escapeHtml(normalizedCategory)}
                         </div>
                     ` : ''}
                 </div>
@@ -189,7 +213,7 @@ function createVendorCard(vendor) {
             
             ${vendor.Description ? `
                 <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
-                    ${vendor.Description.length > 150 ? vendor.Description.substring(0, 150) + '...' : vendor.Description}
+                    ${escapeHtml(vendor.Description.length > 150 ? vendor.Description.substring(0, 150) + '...' : vendor.Description)}
                 </p>
             ` : ''}
             
@@ -200,7 +224,7 @@ function createVendorCard(vendor) {
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
-                        ${vendor.Country}
+                        ${escapeHtml(vendor.Country)}
                     </div>
                 ` : ''}
                 ${vendor.Founded ? `
@@ -208,7 +232,7 @@ function createVendorCard(vendor) {
                         <svg style="width: 1rem; height: 1rem; margin-right: 0.5rem; color: var(--orange-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
-                        Founded ${vendor.Founded}
+                        Founded ${escapeHtml(String(vendor.Founded))}
                     </div>
                 ` : ''}
             </div>
@@ -263,11 +287,11 @@ function showVendorModal(vendorId) {
                     <span style="font-size: 3rem;">${emoji}</span>
                     <div>
                         <h2 style="font-family: 'Barlow Condensed', sans-serif; font-size: 2.5rem; font-weight: 900; color: var(--text-primary); margin-bottom: 0.5rem;">
-                            ${vendor.Name}
+                            ${escapeHtml(vendor.Name)}
                         </h2>
                         ${normalizedCategory ? `
                             <div style="background: rgba(255, 102, 0, 0.1); border: 1px solid rgba(255, 102, 0, 0.3); color: var(--orange-primary); padding: 0.35rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; display: inline-block;">
-                                ${normalizedCategory}
+                                ${escapeHtml(normalizedCategory)}
                             </div>
                         ` : ''}
                     </div>
@@ -289,7 +313,7 @@ function showVendorModal(vendorId) {
                         </svg>
                         About
                     </h3>
-                    <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">${vendor.Description}</p>
+                    <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">${escapeHtml(vendor.Description)}</p>
                 </div>
             ` : ''}
             
@@ -304,19 +328,19 @@ function showVendorModal(vendorId) {
                     ${vendor.Headquarters ? `
                         <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 1rem;">
                             <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Headquarters</div>
-                            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">${vendor.Headquarters}</div>
+                            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">${escapeHtml(vendor.Headquarters)}</div>
                         </div>
                     ` : ''}
                     ${vendor.Founded ? `
                         <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 1rem;">
                             <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Founded</div>
-                            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">${vendor.Founded}</div>
+                            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">${escapeHtml(String(vendor.Founded))}</div>
                         </div>
                     ` : ''}
                     ${vendor.MarketPosition ? `
                         <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 1rem; grid-column: span 2;">
                             <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Market Position</div>
-                            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">${vendor.MarketPosition}</div>
+                            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">${escapeHtml(vendor.MarketPosition)}</div>
                         </div>
                     ` : ''}
                 </div>
@@ -336,7 +360,7 @@ function showVendorModal(vendorId) {
                                 <svg style="width: 1rem; height: 1rem; margin-right: 0.75rem; margin-top: 0.1rem; color: var(--accent-green); flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
-                                <span style="font-size: 0.9rem; color: var(--text-secondary);">${product}</span>
+                                <span style="font-size: 0.9rem; color: var(--text-secondary);">${escapeHtml(product)}</span>
                             </div>
                         `).join('')}
                     </div>
@@ -355,7 +379,7 @@ function showVendorModal(vendorId) {
                         ${vendor.Categories.map(cat => {
                             const normalizedCat = normalizeCategory(cat);
                             const catEmoji = categoryEmojis[normalizedCat] || '🔧';
-                            return `<span style="background: rgba(255, 102, 0, 0.1); border: 1px solid rgba(255, 102, 0, 0.3); color: var(--orange-primary); padding: 0.35rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em;">${catEmoji} ${normalizedCat}</span>`;
+                            return `<span style="background: rgba(255, 102, 0, 0.1); border: 1px solid rgba(255, 102, 0, 0.3); color: var(--orange-primary); padding: 0.35rem 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em;">${catEmoji} ${escapeHtml(normalizedCat)}</span>`;
                         }).join('')}
                     </div>
                 </div>
@@ -363,7 +387,7 @@ function showVendorModal(vendorId) {
             
             ${vendor.Website ? `
                 <div style="padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
-                    <a href="${vendor.Website}" target="_blank" rel="noopener noreferrer"
+                    <a href="${safeHref(vendor.Website)}" target="_blank" rel="noopener noreferrer"
                        onclick="event.stopPropagation()"
                        style="display: inline-flex; align-items: center; padding: 1rem 2rem; background: var(--orange-primary); color: var(--bg-primary); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; text-decoration: none; transition: all 0.3s; border: 2px solid var(--orange-primary);"
                        onmouseover="this.style.background='transparent'; this.style.color='var(--orange-primary)'"
@@ -371,7 +395,7 @@ function showVendorModal(vendorId) {
                         <svg style="width: 1.25rem; height: 1.25rem; margin-right: 0.75rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
                         </svg>
-                        Visit ${vendor.Name} Website
+                        Visit ${escapeHtml(vendor.Name)} Website
                         <svg style="width: 1rem; height: 1rem; margin-left: 0.75rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
                         </svg>

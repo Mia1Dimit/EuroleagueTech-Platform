@@ -24,6 +24,7 @@ module "lambda" {
   layers                = each.value["layers"]
   environment_variables = each.value["environment_variables"]
   vpc_config            = each.value["vpc_config"]
+  tracing_config        = each.value["tracing_config"]
   
   # Tags
   specifictags     = each.value["specifictags"]

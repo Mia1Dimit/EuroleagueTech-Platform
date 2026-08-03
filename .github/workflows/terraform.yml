@@ -1,0 +1,189 @@
+name: EuroleagueTech Platform — Terraform
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "infrastructure/**"
+      - "modules/**"
+      - ".github/workflows/terraform.yml"
+  push:
+    branches: [main]
+    paths:
+      - "infrastructure/**"
+      - "modules/**"
+      - ".github/workflows/terraform.yml"
+  workflow_dispatch:
+
+env:
+  TF_VERSION: "1.9.8"
+  TF_ROOT: "infrastructure"
+  TF_VARS_FILE: "../environments/dev.tfvars"
+  TF_STATE_KEY: "euroleaguetech-platform/dev/terraform.tfstate"
+  TF_IN_AUTOMATION: "true"
+  AWS_REGION: "eu-west-1"
+
+concurrency:
+  group: terraform-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ───────────────────────────────────────────────────────────────────────────
+  # PR: fmt → init → validate → plan → infracost → comment
+  # ───────────────────────────────────────────────────────────────────────────
+  plan-pr:
+    name: Terraform PR Checks
+    if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout (Head)
+        uses: actions/checkout@v4
+        with:
+          path: head
+
+      - name: Checkout (Base — for Infracost diff)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+          path: base
+
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_OIDC_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Terraform Format
+        run: terraform fmt -check -recursive head/${{ env.TF_ROOT }}
+
+      - name: Terraform Init
+        run: |
+          terraform -chdir=head/${{ env.TF_ROOT }} init \
+            -backend-config="bucket=${{ secrets.TF_BACKEND_BUCKET }}" \
+            -backend-config="key=${{ env.TF_STATE_KEY }}" \
+            -backend-config="region=${{ env.AWS_REGION }}" \
+            -backend-config="dynamodb_table=${{ secrets.TF_LOCK_TABLE }}" \
+            -input=false
+
+      - name: Terraform Validate
+        run: terraform -chdir=head/${{ env.TF_ROOT }} validate
+
+      - name: Terraform Plan
+        run: |
+          terraform -chdir=head/${{ env.TF_ROOT }} plan \
+            -var-file=${{ env.TF_VARS_FILE }} \
+            -out=tfplan \
+            -no-color \
+            -input=false
+
+      - name: Export Plan (text — for PR comment)
+        run: |
+          terraform -chdir=head/${{ env.TF_ROOT }} show -no-color tfplan \
+            > head/${{ env.TF_ROOT }}/tfplan.txt
+
+      - name: Export Plan (JSON — for Infracost)
+        run: |
+          terraform -chdir=head/${{ env.TF_ROOT }} show -json tfplan \
+            > head/${{ env.TF_ROOT }}/plan.json
+
+      - name: Infracost Diff
+        uses: infracost/actions/diff@v4
+        with:
+          api-key: ${{ secrets.INFRACOST_API_KEY }}
+          base-path: base
+          head-path: head
+
+      - name: Upload plan artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan-pr-${{ github.event.pull_request.number }}
+          path: |
+            head/${{ env.TF_ROOT }}/tfplan
+            head/${{ env.TF_ROOT }}/tfplan.txt
+          retention-days: 5
+
+      - name: Comment plan on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const plan = fs.readFileSync('head/${{ env.TF_ROOT }}/tfplan.txt', 'utf8').slice(0, 60000);
+            const body = [
+              '### Terraform Plan',
+              '',
+              '> Plan generated for this PR.',
+              '',
+              '```hcl',
+              plan,
+              '```'
+            ].join('\n');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body
+            });
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # Main: init → plan → apply
+  # ───────────────────────────────────────────────────────────────────────────
+  apply-main:
+    name: Terraform Apply
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_OIDC_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Terraform Init
+        run: |
+          terraform -chdir=${{ env.TF_ROOT }} init \
+            -backend-config="bucket=${{ secrets.TF_BACKEND_BUCKET }}" \
+            -backend-config="key=${{ env.TF_STATE_KEY }}" \
+            -backend-config="region=${{ env.AWS_REGION }}" \
+            -backend-config="dynamodb_table=${{ secrets.TF_LOCK_TABLE }}" \
+            -lock-timeout=5m \
+            -input=false
+
+      - name: Terraform Plan
+        run: |
+          terraform -chdir=${{ env.TF_ROOT }} plan \
+            -var-file=${{ env.TF_VARS_FILE }} \
+            -out=tfplan \
+            -lock-timeout=5m \
+            -no-color \
+            -input=false
+
+      - name: Terraform Apply
+        run: |
+          terraform -chdir=${{ env.TF_ROOT }} apply \
+            -auto-approve \
+            -lock-timeout=5m \
+            tfplan

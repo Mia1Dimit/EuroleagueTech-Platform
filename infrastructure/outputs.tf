@@ -2,6 +2,11 @@
 # Development Environment - Outputs
 # ============================================================================
 
+output "github_actions_role_arn" {
+  description = "IAM role ARN for GitHub Actions OIDC — set as AWS_OIDC_ROLE_ARN secret"
+  value       = aws_iam_role.github_actions.arn
+}
+
 # -----------------------------------------------------------------------------
 # S3 Bucket Outputs
 # -----------------------------------------------------------------------------

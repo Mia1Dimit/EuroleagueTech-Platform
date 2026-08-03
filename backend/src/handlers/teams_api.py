@@ -1,38 +1,20 @@
-"""
-Teams API Lambda Function.
-
-Handles:
-- GET /teams           → List all teams (optional: filter by country)
-- GET /teams/{teamId}  → Get specific team with partnerships
-
-Similar to vendors_api.py but for TEAM entities.
-"""
-
 import sys
 import os
 
-# Add utils to Python path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'utils'))
 
+from aws_lambda_powertools import Logger, Tracer
+from aws_lambda_powertools.utilities.typing import LambdaContext
 from response import success, error
 from dynamodb import get_item, scan_items
 
+logger = Logger()
+tracer = Tracer()
 
-def lambda_handler(event, context):
-    """
-    Main Lambda entry point for Teams API.
-    
-    Routes:
-    - GET /teams         → list_teams()
-    - GET /teams/{id}    → get_team_by_id()
-    
-    Query params:
-    - ?country=Spain     → Filter teams by country
-    """
-    
-    print(f"Received event: {event}")  # CloudWatch Logs
-    
-    # Route based on path
+
+@tracer.capture_lambda_handler
+@logger.inject_lambda_context(log_event=False)
+def lambda_handler(event, context: LambdaContext):
     path_params = event.get('pathParameters') or {}
     team_id = path_params.get('teamId')
     
